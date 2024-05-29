@@ -1,0 +1,127 @@
+﻿<Window x:Class="Smurftown.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Smurftown"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1200"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        >
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#15171e" Offset="0.0"/>
+            <GradientStop Color="#1c1e27" Offset="1.0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    
+    <Window.Resources>
+        <Style x:Key="WindowButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="Transparent" 
+                                BorderThickness="0" 
+                                CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF3E3E3E"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF2D2D2D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CloseButtonStyle" BasedOn="{StaticResource WindowButtonStyle}" TargetType="Button">
+            <Setter Property="Content" Value="X"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="Transparent" 
+                                BorderThickness="0" 
+                                CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFB22222"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF8B0000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <StackPanel>
+        <DockPanel HorizontalAlignment="Stretch"
+       VerticalAlignment="Top"
+       LastChildFill="True"
+           
+           Height="40"
+                   MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
+
+            <DockPanel.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#15171e" Offset="0.0"/>
+                    <GradientStop Color="#1c1e27" Offset="1.0"/>
+                </LinearGradientBrush>
+            </DockPanel.Background>
+            <Grid DockPanel.Dock="Right"
+      HorizontalAlignment="Right">
+
+                <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center">
+
+                    <Button Style="{StaticResource WindowButtonStyle}" Content="_" Click="Minimize_Click"/>
+                    <Button Style="{StaticResource WindowButtonStyle}" Content="[ ]" Click="Maximize_Click"/>
+                    <Button Style="{StaticResource CloseButtonStyle}" Content="x" Click="Close_Click"/>
+
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+             
+                <Image HorizontalAlignment="Left" Source="UI/Images/battlenet.png" Height="60" Width="60" Margin="20,0,0,0"/>
+                <TextBlock Foreground="White" FontSize="22" VerticalAlignment="Center"  Margin="20,0,0,0">Battlenet Launcher</TextBlock>
+            </StackPanel>
+
+            <Button Style="{StaticResource BattlenetButtonTheme}" Content="Battle Pass jetzt kaufen" Width="250" Height="50"/>
+
+
+
+        </Grid>
+    </StackPanel>
+    
+</Window>

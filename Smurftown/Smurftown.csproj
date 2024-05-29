@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="UI\Images\battlenet.png" />
+    <None Remove="UI\Images\hots.png" />
+    <None Remove="UI\Images\overwatch.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\MVVM\Model\" />
+    <Folder Include="UI\MVVM\ViewModel\" />
+    <Folder Include="UI\MVVM\View\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="UI\Images\battlenet.png" />
+    <Resource Include="UI\Images\hots.png" />
+    <Resource Include="UI\Images\overwatch.png" />
+  </ItemGroup>
+
+</Project>
