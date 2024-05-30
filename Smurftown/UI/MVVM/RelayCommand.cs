@@ -10,9 +10,9 @@ namespace Smurftown.UI.MVVM
     class RelayCommand: ICommand
     {
         private readonly Action<object> _execute;
-        private readonly Func<object, bool> _canExecute;
+        private readonly Func<object, bool>? _canExecute;
 
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute)
+        public RelayCommand(Action<object> execute, Func<object, bool>? canExecute = null)
         {
             _execute = execute;
             _canExecute = canExecute;
@@ -24,14 +24,8 @@ namespace Smurftown.UI.MVVM
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute == null || _canExecute(parameter);
-        }
+        public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
 
-        public void Execute(object parameter)
-        {
-            _execute(parameter);
-        }
+        public void Execute(object parameter) => _execute(parameter);
     }
 }

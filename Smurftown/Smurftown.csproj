@@ -19,8 +19,6 @@
 
   <ItemGroup>
     <Folder Include="UI\MVVM\Model\" />
-    <Folder Include="UI\MVVM\ViewModel\" />
-    <Folder Include="UI\MVVM\View\" />
   </ItemGroup>
 
   <ItemGroup>
