@@ -6,7 +6,14 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="UI/Theme/BattlenetRadioButtonTheme.xaml"/>
+                <ResourceDictionary Source="UI/Theme/BattlenetIconButtonTheme.xaml"/>
                 <ResourceDictionary Source="UI/Theme/BattlenetButtonTheme.xaml"/>
+                <ResourceDictionary>
+                    <Image x:Key="addImage" Source="UI/Images/add.png" />
+                    <Image x:Key="overwatchImage" Source="UI/Images/overwatch.png"/>
+                    <Image x:Key="hotsImage" Source="UI/Images/hots.png"/>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="BattlenetButtonTheme" TargetType="Button">
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Background" Value="#1A73E8"/>
         <!-- Blue background -->
         <Setter Property="Foreground" Value="White"/>

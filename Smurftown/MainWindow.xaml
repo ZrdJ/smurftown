@@ -72,14 +72,20 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
-    <StackPanel>
-        <DockPanel HorizontalAlignment="Stretch"
-       VerticalAlignment="Top"
-       LastChildFill="True"
-           
-           Height="40"
-                   MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" LastChildFill="True"
+             MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
 
             <DockPanel.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -88,11 +94,11 @@
                 </LinearGradientBrush>
             </DockPanel.Background>
             <Grid DockPanel.Dock="Right"
-      HorizontalAlignment="Right">
+HorizontalAlignment="Right">
 
                 <StackPanel Orientation="Horizontal"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center">
+          HorizontalAlignment="Right"
+          VerticalAlignment="Center">
 
                     <Button Style="{StaticResource WindowButtonStyle}" Content="_" Click="Minimize_Click"/>
                     <Button Style="{StaticResource WindowButtonStyle}" Content="[ ]" Click="Maximize_Click"/>
@@ -101,27 +107,28 @@
                 </StackPanel>
             </Grid>
         </DockPanel>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="100"/>
-            </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Image HorizontalAlignment="Left" Source="UI/Images/battlenet.png" Height="60" Width="60" Margin="20,0,0,0"/>
 
-            <StackPanel Orientation="Horizontal">
-             
-                <Image HorizontalAlignment="Left" Source="UI/Images/battlenet.png" Height="60" Width="60" Margin="20,0,0,0"/>
-                <TextBlock Foreground="White" FontSize="22" VerticalAlignment="Center"  Margin="20,0,0,0">Battlenet Launcher</TextBlock>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="20,0,0,0">
+                <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Accounts" GroupName="Menu" IsChecked="True" Margin="10"/>
+                <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Benutzer" GroupName="Menu" Margin="10"/>
             </StackPanel>
+           
+        </StackPanel>
 
+        <DockPanel Grid.Row="2" Height="70" VerticalAlignment="Top" Background="#24262e" Margin="20,10,20,10">
+            <TextBlock Foreground="Gray" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"  Margin="20,0,0,0">FILTER</TextBlock>
+            
+            <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Content="{StaticResource overwatchImage}" Margin="20,0,0,0" Width="60"/>
+            <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Content="{StaticResource hotsImage}" Margin="0" Width="60"/>
+            <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Content="{StaticResource addImage}" HorizontalAlignment="Right" Margin="0,0,20,0" Width="60"/>
+     
+        </DockPanel>
+
+        <StackPanel Grid.Row="2" VerticalAlignment="Bottom">
             <Button Style="{StaticResource BattlenetButtonTheme}" Content="Battle Pass jetzt kaufen" Width="250" Height="50"/>
-
-
-
-        </Grid>
-    </StackPanel>
-    
+        </StackPanel>
+    </Grid>
 </Window>
