@@ -114,7 +114,7 @@ HorizontalAlignment="Right">
         </DockPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Image HorizontalAlignment="Left" Source="UI/Images/battlenet.png" Height="50" Width="50" Margin="20,0,0,0"/>
+            <Image HorizontalAlignment="Left" Source="pack://application:,,,/UI/Images/battlenet.png" Height="50" Width="50" Margin="20,0,0,0"/>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="10,0,0,0">
                 <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Accounts" GroupName="Menu" IsChecked="True" Command="{Binding AccountsViewCommand}" Margin="10"/>
