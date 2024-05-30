@@ -13,7 +13,9 @@
     <None Remove="UI\Images\battlenet.png" />
     <None Remove="UI\Images\copy.png" />
     <None Remove="UI\Images\hots.png" />
+    <None Remove="UI\Images\hots_full.png" />
     <None Remove="UI\Images\overwatch.png" />
+    <None Remove="UI\Images\overwatch_full.png" />
     <None Remove="UI\Images\settings.png" />
   </ItemGroup>
 
@@ -26,7 +28,9 @@
     <Resource Include="UI\Images\battlenet.png" />
     <Resource Include="UI\Images\copy.png" />
     <Resource Include="UI\Images\hots.png" />
+    <Resource Include="UI\Images\hots_full.png" />
     <Resource Include="UI\Images\overwatch.png" />
+    <Resource Include="UI\Images\overwatch_full.png" />
     <Resource Include="UI\Images\settings.png" />
   </ItemGroup>
 

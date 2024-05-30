@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Smurftown.UI.MVVM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,17 @@ namespace Smurftown.UI.MVVM.View
         public AccountsView()
         {
             InitializeComponent();
+            var overwatchImage = (Image)Application.Current.Resources["overwatchFullImage"];
+
+            var accountCardVM = new AccountCardViewModel()
+            {
+                ImageSource = overwatchImage.Source,
+                CardText = "Sample Text"
+            };
+
+            // Set the DataContext of the CardControl to the ViewModel
+            accountCard.DataContext = accountCardVM;
+
         }
     }
 }

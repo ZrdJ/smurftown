@@ -120,7 +120,7 @@ HorizontalAlignment="Right">
                 <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Accounts" GroupName="Menu" IsChecked="True" Command="{Binding AccountsViewCommand}" Margin="10"/>
                 <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Benutzer" GroupName="Menu" Command="{Binding UsersViewCommand}" Margin="10"/>
             </StackPanel>
-           
+
         </StackPanel>
 
         <ContentControl Grid.Row="2" Content="{Binding CurrentView}"/>

@@ -14,8 +14,9 @@
                 <ResourceDictionary>
                     <Image x:Key="addImage" Source="UI/Images/add.png" />
                     <Image x:Key="overwatchImage" Source="UI/Images/overwatch.png"/>
-
+                    <Image x:Key="overwatchFullImage" Source="UI/Images/overwatch_full.png"/>
                     <Image x:Key="hotsImage" Source="UI/Images/hots.png"/>
+                    <Image x:Key="hotsFullImage" Source="UI/Images/hots_full.png"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
 
