@@ -23,9 +23,15 @@
         <DockPanel Grid.Row="0" Height="60" VerticalAlignment="Top" Background="#24262e" Margin="20,10,20,10">
             <TextBlock Foreground="Gray" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"  Margin="20,0,0,0">FILTER</TextBlock>
 
-            <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Content="{StaticResource overwatchImage}" Margin="20,0,0,0" Width="60"/>
-            <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Content="{StaticResource hotsImage}" Margin="0" Width="60"/>
-            <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Content="{StaticResource addImage}" HorizontalAlignment="Right" Margin="0,0,20,0" Width="60"/>
+            <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Margin="20,0,0,0" Width="50">
+                <Image Source="pack://application:,,,/UI/Images/overwatch.png" Height="35" Width="35" />
+            </ToggleButton>
+            <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Margin="0" Width="50">
+                <Image Source="pack://application:,,,/UI/Images/hots.png"  Height="35" Width="35" />
+            </ToggleButton>
+            <ToggleButton HorizontalAlignment="Right" Style="{StaticResource BattlenetIconButtonTheme}" Margin="0" Width="60">
+                <Image Source="pack://application:,,,/UI/Images/add.png"  Height="35" Width="35" />
+            </ToggleButton>
 
         </DockPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal">

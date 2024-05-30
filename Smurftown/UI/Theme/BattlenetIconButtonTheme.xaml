@@ -5,16 +5,15 @@
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid x:Name="grid">
-                        <Image x:Name="icon" 
-                               HorizontalAlignment="Center"
-                            Height="35" Width="35"
-                           Source="{Binding Content.Source, RelativeSource={RelativeSource TemplatedParent}}"
-                           Margin="0"/>
-                        
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
                         <Border x:Name="underline" 
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"

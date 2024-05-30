@@ -13,15 +13,18 @@
                 <Image Source="{Binding ImageSource}" Height="60" Stretch="Uniform" Margin="0,10,0,10"/>
             </Border >
             <StackPanel>
-                <StackPanel Orientation="Vertical" Height="40">
-                    <TextBlock Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0">PAPAUNCH#2323</TextBlock>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40">
+                    <TextBlock Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,0">PAPAUNCH</TextBlock>
+                    <TextBlock Foreground="White" FontWeight="Light" HorizontalAlignment="Center" Margin="0,20,0,0">#2323</TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Vertical" Height="40">
+                <StackPanel Orientation="Vertical" Height="20">
                     
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="40">
-                    <Button  Style="{StaticResource BattlenetButtonTheme}" Content="Öffnen" Width="90" Height="30"/>
-                    <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Content="{StaticResource addImage}" Margin="10,0,0,0" Width="40"/>
+                    <Button  Style="{StaticResource BattlenetButtonPrimaryTheme}" Content="Öffnen" Width="90" Height="30"/>
+                    <Button  Style="{StaticResource BattlenetButtonSecondaryTheme}" Width="40" Height="30" Margin="5,0,0,0">
+                        <Image Source="pack://application:,,,/UI/Images/settings.png" Margin="0"  Height="20" Width="20" />
+                    </Button>
                 </StackPanel>
             </StackPanel>
             
