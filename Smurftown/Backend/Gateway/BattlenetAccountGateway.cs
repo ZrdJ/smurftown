@@ -26,7 +26,7 @@ namespace Smurftown.Backend.Gateway
         public BattlenetAccountGateway()
         {
             _configFile = Path.Combine(_configDirectory, "data.yaml");
-            _battlenetAccounts = new ObservableHashSet<BattlenetAccount>(readFromConfigFile());
+            _battlenetAccounts = new ObservableHashSet<BattlenetAccount>(ReadFromConfigFile());
         }
 
         public void AddOrUpdate(BattlenetAccount account)
@@ -42,13 +42,14 @@ namespace Smurftown.Backend.Gateway
             _battlenetAccounts.Remove(account);
         }
 
-        private List<BattlenetAccount> readFromConfigFile()
+        private List<BattlenetAccount> ReadFromConfigFile()
         {
             ensureConfigFileExists();
             var content = File.ReadAllText(_configFile);
-            return _yamlIn.Deserialize<List<BattlenetAccount>>(new StringReader(content));
+            var accountsFromList = _yamlIn.Deserialize<List<BattlenetAccount>>(new StringReader(content));
+            return accountsFromList ?? ([]);
         }
-        private void saveToConfigFile()
+        private void SaveToConfigFile()
         {
             ensureConfigFileExists();
             var content = _yamlOut.Serialize(_battlenetAccounts.AsEnumerable());

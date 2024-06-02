@@ -24,17 +24,6 @@ namespace Smurftown.UI.MVVM.View
         public AccountsView()
         {
             InitializeComponent();
-            var overwatchImage = new BitmapImage(new Uri("pack://application:,,,/UI/Images/overwatch_full.png")); ;
-
-            var accountCardVM = new AccountCardViewModel()
-            {
-                ImageSource = overwatchImage,
-                CardText = "Sample Text"
-            };
-
-            // Set the DataContext of the CardControl to the ViewModel
-            accountCard.DataContext = accountCardVM;
-
         }
     }
 }

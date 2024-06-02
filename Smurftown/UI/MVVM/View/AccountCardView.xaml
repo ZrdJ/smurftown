@@ -14,8 +14,8 @@
             </Border >
             <StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40">
-                    <TextBlock Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,0">PAPAUNCH</TextBlock>
-                    <TextBlock Foreground="White" FontWeight="Light" HorizontalAlignment="Center" Margin="0,20,0,0">#2323</TextBlock>
+                    <TextBlock Text="{Binding Account.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+                    <TextBlock Text="{Binding Account.Discriminator}" Foreground="White" FontWeight="Light" HorizontalAlignment="Center" Margin="0,20,0,0"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Height="20">
                     

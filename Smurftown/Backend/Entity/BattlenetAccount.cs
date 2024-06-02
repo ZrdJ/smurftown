@@ -10,7 +10,6 @@ namespace Smurftown.Backend.Entity
     {
         private string _email;
         private string _name;
-
         public required string Name { get => _name; set => _name = value.ToUpper(); }
         public required string Discriminator { get; set; }
         public required string Email { get => _email; set => _email = value.ToLower(); }

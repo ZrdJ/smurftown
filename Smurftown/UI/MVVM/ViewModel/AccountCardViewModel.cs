@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Smurftown.Backend.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,27 +10,21 @@ namespace Smurftown.UI.MVVM.ViewModel
 {
     class AccountCardViewModel: Observable
     {
-        private ImageSource _imageSource;
-        private string _cardText;
+        private BattlenetAccount _account;
 
-        public ImageSource ImageSource
+        public BattlenetAccount Account
         {
-            get => _imageSource;
+            get => _account;
             set
             {
-                _imageSource = value;
+                _account = value;
                 OnPropertyChanged();
             }
         }
 
-        public string CardText
+        public AccountCardViewModel(BattlenetAccount Account) => _account = Account;
+        public AccountCardViewModel()
         {
-            get => _cardText;
-            set
-            {
-                _cardText = value;
-                OnPropertyChanged();
-            }
         }
     }
 }

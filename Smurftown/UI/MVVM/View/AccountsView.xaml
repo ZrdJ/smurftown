@@ -34,8 +34,24 @@
             </ToggleButton>
 
         </DockPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <local:AccountCardView x:Name="accountCard" Width="200" Height="200" Margin="50,0,0,0"/>
-        </StackPanel>
+       
+            <ItemsControl ItemsSource="{Binding BattlenetAccounts}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                    <local:AccountCardView Width="200" Height="200" Margin="50,0,0,0">
+                        <local:AccountCardView.DataContext>
+                            <viewModel:AccountCardViewModel Account="{Binding}" />
+                        </local:AccountCardView.DataContext>
+                    </local:AccountCardView>
+
+                </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+       
     </Grid>
 </UserControl>

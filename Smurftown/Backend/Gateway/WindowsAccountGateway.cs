@@ -40,7 +40,7 @@ namespace Smurftown.Backend.Gateway
 
         public void Add(WindowsUserAccount account)
         {
-            
+            CreateWindowsAccount(account);
         }
 
         private List<WindowsUserAccount> ReadWindowsAccounts()
@@ -58,8 +58,8 @@ namespace Smurftown.Backend.Gateway
         {
             USER_INFO_1 userInfo = new USER_INFO_1
             {
-                usri1_name = "NewUser",
-                usri1_password = "Password123",
+                usri1_name = account.Name,
+                usri1_password = account.Password,
                 usri1_priv = USER_PRIV_USER,
                 usri1_home_dir = null,
                 usri1_comment = "New user account",
