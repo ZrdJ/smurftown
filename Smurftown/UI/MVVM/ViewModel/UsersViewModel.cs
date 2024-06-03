@@ -4,19 +4,20 @@ using Smurftown.Backend.Gateway;
 
 namespace Smurftown.UI.MVVM.ViewModel
 {
-    class UsersViewModel: Observable
+    internal class UsersViewModel: Observable
     {
-        private readonly WindowsAccountGateway _windowsUserAccountGateway = new();
-        private ObservableHashSet<WindowsUserAccount> _windowsUserAccounts;
+        private static readonly WindowsAccountLinkedGateway _windowsAccountLinkedGateway = WindowsAccountLinkedGateway.Instance;
+        private ObservableHashSet<WindowsUserAccountLinked> _windowsUserAccountsLinked;
 
-        public ObservableHashSet<WindowsUserAccount> WindowsAccounts
+        public ObservableHashSet<WindowsUserAccountLinked> WindowsAccountLinked
         {
-            get { return _windowsUserAccounts; }
-            set { _windowsUserAccounts = value; OnPropertyChanged(); }
+            get { return _windowsUserAccountsLinked; }
+            set { _windowsUserAccountsLinked = value; OnPropertyChanged(); }
         }
         
-        public UsersViewModel() {
-            _windowsUserAccounts = _windowsUserAccountGateway.WindowsAccounts;
+        public UsersViewModel()
+        {
+            WindowsAccountLinked = _windowsAccountLinkedGateway.WindowsAccountsLinked;
         }
     }
 }

@@ -1,17 +1,13 @@
-﻿using Smurftown.Backend.Entity;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Management;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Management;
+using Smurftown.Backend.Entity;
 
 namespace Smurftown.Backend.Gateway
 {
-    class WindowsAccountGateway
+    public class WindowsAccountGateway
     {
+        public static readonly WindowsAccountGateway Instance = new();
+        
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         struct USER_INFO_1
         {
@@ -34,7 +30,7 @@ namespace Smurftown.Backend.Gateway
 
         private readonly ObservableHashSet<WindowsUserAccount> _windowsAccounts = [];
         public ObservableHashSet<WindowsUserAccount> WindowsAccounts { get => _windowsAccounts; }
-        public WindowsAccountGateway()
+        private WindowsAccountGateway()
         {
             _windowsAccounts = new ObservableHashSet<WindowsUserAccount>(ReadWindowsAccounts());
         }
@@ -46,7 +42,7 @@ namespace Smurftown.Backend.Gateway
 
         private List<WindowsUserAccount> ReadWindowsAccounts()
         {
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_UserAccount");
+            var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_UserAccount");
             return (from ManagementObject user in searcher.Get()
                     select new WindowsUserAccount
                     {
@@ -55,9 +51,9 @@ namespace Smurftown.Backend.Gateway
                     }).ToList();
            
         }
-        private void CreateWindowsAccount(WindowsUserAccount account)
+        private static void CreateWindowsAccount(WindowsUserAccount account)
         {
-            USER_INFO_1 userInfo = new USER_INFO_1
+            var userInfo = new USER_INFO_1
             {
                 usri1_name = account.Name,
                 usri1_password = account.Password,
@@ -69,15 +65,8 @@ namespace Smurftown.Backend.Gateway
             };
 
             uint parm_err;
-            int result = NetUserAdd(null, 1, ref userInfo, out parm_err);
-            if (result == 0)
-            {
-                Console.WriteLine("User created successfully.");
-            }
-            else
-            {
-                Console.WriteLine($"Error creating user: {result}");
-            }
+            var result = NetUserAdd(null, 1, ref userInfo, out parm_err);
+            Console.WriteLine(result == 0 ? "User created successfully." : $"Error creating user: {result}");
         }
     }
 }

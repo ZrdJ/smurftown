@@ -4,9 +4,9 @@ using Smurftown.Backend.Gateway;
 
 namespace Smurftown.UI.MVVM.ViewModel
 {
-    class AccountsViewModel: Observable
+    internal class AccountsViewModel: Observable
     {
-        private readonly BattlenetAccountGateway _battlenetAccountGateway = new();
+        private readonly BattlenetAccountGateway _battlenetAccountGateway = BattlenetAccountGateway.Instance;
         private ObservableHashSet<BattlenetAccount> _battlenetAccounts;
 
         public ObservableHashSet<BattlenetAccount> BattlenetAccounts

@@ -27,7 +27,7 @@
             </ToggleButton>
         </DockPanel>
         
-        <ItemsControl  Grid.Row="1"  ItemsSource="{Binding WindowsAccounts, UpdateSourceTrigger=PropertyChanged}">
+        <ItemsControl  Grid.Row="1"  ItemsSource="{Binding WindowsAccountLinked, UpdateSourceTrigger=PropertyChanged}">
                 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

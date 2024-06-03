@@ -11,8 +11,10 @@ using System.IO;
 
 namespace Smurftown.Backend.Gateway
 {
-    class BattlenetAccountGateway
+    public class BattlenetAccountGateway
     {
+        public static readonly BattlenetAccountGateway Instance = new();
+        
         private readonly string _configDirectory = AppDomain.CurrentDomain.BaseDirectory;
         private readonly string _configFile;
         private readonly ObservableHashSet<BattlenetAccount> _battlenetAccounts;
@@ -23,7 +25,7 @@ namespace Smurftown.Backend.Gateway
             .WithNamingConvention(UnderscoredNamingConvention.Instance)
             .Build();
         public ObservableHashSet<BattlenetAccount> BattlenetAccounts { get => _battlenetAccounts; }
-        public BattlenetAccountGateway()
+        private BattlenetAccountGateway()
         {
             _configFile = Path.Combine(_configDirectory, "data.yaml");
             _battlenetAccounts = new ObservableHashSet<BattlenetAccount>(ReadFromConfigFile());

@@ -7,12 +7,12 @@ using Smurftown.UI.MVVM.ViewModel;
 
 namespace Smurftown.UI.MVVM.Converter;
 
-[ValueConversion(typeof(WindowsUserAccount), typeof(UserCardViewModel))]
+[ValueConversion(typeof(WindowsUserAccountLinked), typeof(UserCardViewModel))]
 class WindowsAccountToCardViewModelConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is WindowsUserAccount account)
+        if (value is WindowsUserAccountLinked account)
         {
             return new UserCardViewModel(account);
         }

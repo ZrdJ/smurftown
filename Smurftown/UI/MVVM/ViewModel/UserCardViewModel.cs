@@ -5,6 +5,11 @@ namespace Smurftown.UI.MVVM.ViewModel;
 
 public class UserCardViewModel : Observable
 {
+    private WindowsUserAccountLinked? _user;
+    private Visibility _hasAccountLinked = Visibility.Hidden;
+    private string _username = null;
+    private string _battletag = null;
+
     public Visibility HasAccountLinked
     {
         get { return _hasAccountLinked; }
@@ -14,22 +19,40 @@ public class UserCardViewModel : Observable
             OnPropertyChanged();
         }
     }
-
-    private WindowsUserAccount? _user;
-    private Visibility _hasAccountLinked = Visibility.Hidden;
-
-    public WindowsUserAccount? User
+    public WindowsUserAccountLinked? User
     {
         get { return _user; }
         set
         {
             _user = value;
-            HasAccountLinked = User.BattlenetEmail != null ? Visibility.Visible : Visibility.Hidden;
+            HasAccountLinked = User.BattlenetAccount != null ? Visibility.Visible : Visibility.Hidden;
+            Username = User.WindowsUserAccount.Name;
+            Battletag = User.BattlenetAccount?.Battletag() ?? "";
             OnPropertyChanged();
         }
     }
 
-    public UserCardViewModel(WindowsUserAccount user) => User = user;
+    public string Username
+    {
+        get { return _username; }
+        set
+        {
+            _username = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    public string Battletag
+    {
+        get { return _battletag; }
+        set
+        {
+            _battletag = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public UserCardViewModel(WindowsUserAccountLinked user) => User = user;
 
     public UserCardViewModel()
     {
