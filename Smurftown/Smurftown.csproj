@@ -15,6 +15,7 @@
     <None Remove="UI\Images\hots.png" />
     <None Remove="UI\Images\hots_full.png" />
     <None Remove="UI\Images\overwatch.png" />
+    <None Remove="UI\Images\overwatchhots_full.png" />
     <None Remove="UI\Images\overwatch_full.png" />
     <None Remove="UI\Images\settings.png" />
   </ItemGroup>
@@ -35,6 +36,7 @@
     <Resource Include="UI\Images\hots.png" />
     <Resource Include="UI\Images\hots_full.png" />
     <Resource Include="UI\Images\overwatch.png" />
+    <Resource Include="UI\Images\overwatchhots_full.png" />
     <Resource Include="UI\Images\overwatch_full.png" />
     <Resource Include="UI\Images\settings.png" />
   </ItemGroup>

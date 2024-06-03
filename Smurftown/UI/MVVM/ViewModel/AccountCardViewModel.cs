@@ -19,7 +19,14 @@ namespace Smurftown.UI.MVVM.ViewModel
             get { return _account; }
             set { 
                 _account = value;
-                ImageSource = value.Overwatch ? "pack://application:,,,/UI/Images/overwatch_full.png" : "pack://application:,,,/UI/Images/hots_full.png";
+                if (value.Overwatch && value.Hots)
+                {
+                    ImageSource =  "pack://application:,,,/UI/Images/overwatchhots_full.png";
+                } else
+                {
+                    ImageSource = value.Overwatch ? "pack://application:,,,/UI/Images/overwatch_full.png" : "pack://application:,,,/UI/Images/hots_full.png";
+                }
+                
                 OnPropertyChanged(); 
             }
         }
