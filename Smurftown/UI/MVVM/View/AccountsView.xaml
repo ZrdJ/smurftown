@@ -26,10 +26,10 @@
             <TextBlock Foreground="Gray" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"  Margin="20,0,0,0">FILTER</TextBlock>
 
             <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Margin="20,0,0,0" Width="50">
-                <Image Source="pack://application:,,,/UI/Images/overwatch.png" Height="35" Width="35" />
+                <Image Source="pack://application:,,,/UI/Images/overwatch.png"  RenderOptions.BitmapScalingMode="HighQuality" Height="35" Width="35" />
             </ToggleButton>
             <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Margin="0" Width="50">
-                <Image Source="pack://application:,,,/UI/Images/hots.png"  Height="35" Width="35" />
+                <Image Source="pack://application:,,,/UI/Images/hots.png"  RenderOptions.BitmapScalingMode="HighQuality" Height="35" Width="35" />
             </ToggleButton>
             <ToggleButton HorizontalAlignment="Right" Style="{StaticResource BattlenetIconButtonTheme}" Margin="0" Width="60">
                 <Image Source="pack://application:,,,/UI/Images/add.png"  Height="35" Width="35" />
