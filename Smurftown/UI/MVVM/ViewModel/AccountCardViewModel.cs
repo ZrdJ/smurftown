@@ -12,7 +12,14 @@ namespace Smurftown.UI.MVVM.ViewModel
     class AccountCardViewModel: Observable
     {
 
-        public BattlenetAccount? Account { get; }
+        private BattlenetAccount? _account;
+
+        public BattlenetAccount? Account
+        {
+            get { return _account; }
+            set { _account = value; OnPropertyChanged(); }
+        }
+
         public AccountCardViewModel(BattlenetAccount account) => Account = account;
 
         public AccountCardViewModel() { }
