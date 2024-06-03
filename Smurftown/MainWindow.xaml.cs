@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Smurftown.UI.MVVM.ViewModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,7 @@ namespace Smurftown
         public MainWindow()
         {
             InitializeComponent();
+           
         }
 
         private void DockPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

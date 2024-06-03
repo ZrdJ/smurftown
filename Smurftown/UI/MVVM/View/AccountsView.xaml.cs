@@ -24,6 +24,7 @@ namespace Smurftown.UI.MVVM.View
         public AccountsView()
         {
             InitializeComponent();
+            //DataContext = new AccountsViewModel();
         }
     }
 }

@@ -13,11 +13,21 @@ namespace Smurftown.UI.MVVM.ViewModel
 {
     class AccountsViewModel: Observable
     {
-        private readonly BattlenetAccountGateway _battlenetAccountGateway = new BattlenetAccountGateway();
-        public readonly ObservableHashSet<BattlenetAccount> BattlenetAccounts;
+        private readonly BattlenetAccountGateway _battlenetAccountGateway = new();
+
+
+        private ObservableHashSet<BattlenetAccount> _battlenetAccounts;
+
+        public ObservableHashSet<BattlenetAccount> BattlenetAccounts
+
+        {
+            get { return _battlenetAccounts; }
+            set { _battlenetAccounts = value; OnPropertyChanged(); }
+        }
+
+
         public AccountsViewModel() {
-            BattlenetAccounts = _battlenetAccountGateway.BattlenetAccounts;
-            OnPropertyChanged();
+           _battlenetAccounts = _battlenetAccountGateway.BattlenetAccounts;
         }
 
     }

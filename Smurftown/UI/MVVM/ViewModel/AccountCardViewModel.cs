@@ -4,27 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace Smurftown.UI.MVVM.ViewModel
 {
     class AccountCardViewModel: Observable
     {
-        private BattlenetAccount _account;
 
-        public BattlenetAccount Account
-        {
-            get => _account;
-            set
-            {
-                _account = value;
-                OnPropertyChanged();
-            }
-        }
+        public BattlenetAccount? Account { get; }
+        public AccountCardViewModel(BattlenetAccount account) => Account = account;
 
-        public AccountCardViewModel(BattlenetAccount Account) => _account = Account;
-        public AccountCardViewModel()
-        {
-        }
+        public AccountCardViewModel() { }
     }
 }

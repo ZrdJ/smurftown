@@ -5,8 +5,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Smurftown.UI.MVVM.View"
+              xmlns:viewModel="clr-namespace:Smurftown.UI.MVVM.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="220" d:DesignWidth="220">
+    <UserControl.DataContext>
+        <viewModel:AccountCardViewModel/>
+    </UserControl.DataContext>
     <Border Background="#25262a" CornerRadius="10" Padding="0" Margin="5">
         <DockPanel>
             <Border Background="White" DockPanel.Dock="Top" CornerRadius="10,10,0,0">
@@ -14,8 +18,8 @@
             </Border >
             <StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40">
-                    <TextBlock Text="{Binding Account.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,0"/>
-                    <TextBlock Text="{Binding Account.Discriminator}" Foreground="White" FontWeight="Light" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+                    <TextBlock Text="Test" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+                    <TextBlock Text="Test" Foreground="White" FontWeight="Light" HorizontalAlignment="Center" Margin="0,20,0,0"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Height="20">
                     

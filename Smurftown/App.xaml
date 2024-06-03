@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Smurftown"
              xmlns:viewModel="clr-namespace:Smurftown.UI.MVVM.ViewModel"
+             xmlns:viewConverter="clr-namespace:Smurftown.UI.MVVM.Converter"
+             
              xmlns:view="clr-namespace:Smurftown.UI.MVVM.View"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
@@ -12,15 +14,15 @@
                 <ResourceDictionary Source="UI/Theme/BattlenetIconButtonTheme.xaml"/>
                 <ResourceDictionary Source="UI/Theme/BattlenetButtonPrimaryTheme.xaml"/>
                 <ResourceDictionary Source="UI/Theme/BattlenetButtonSecondaryTheme.xaml"/>
-               
             </ResourceDictionary.MergedDictionaries>
-
             <DataTemplate DataType="{x:Type viewModel:AccountsViewModel}">
                 <view:AccountsView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:UsersViewModel}">
                 <view:UsersView/>
             </DataTemplate>
+            <viewConverter:BattlenetAccountToCardViewModelConverter x:Key="BattlenetAccountToCardViewModelConverter"/>
         </ResourceDictionary>
+        
     </Application.Resources>
 </Application>

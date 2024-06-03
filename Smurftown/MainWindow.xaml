@@ -10,11 +10,9 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         >
-
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
-    
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#15171e" Offset="0.0"/>
