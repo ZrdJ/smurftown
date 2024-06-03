@@ -65,5 +65,11 @@ namespace Smurftown.Backend.Gateway
                 File.Create(_configFile);
             }
         }
+
+        public void Reload()
+        {
+            _battlenetAccounts.Clear();
+            foreach (var battlenetAccount in ReadFromConfigFile()) _battlenetAccounts.Add(battlenetAccount);
+        }
     }
 }

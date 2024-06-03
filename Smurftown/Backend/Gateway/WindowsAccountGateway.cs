@@ -68,5 +68,11 @@ namespace Smurftown.Backend.Gateway
             var result = NetUserAdd(null, 1, ref userInfo, out parm_err);
             Console.WriteLine(result == 0 ? "User created successfully." : $"Error creating user: {result}");
         }
+
+        public void Reload()
+        {
+            WindowsAccounts.Clear();
+            foreach (var readWindowsAccount in ReadWindowsAccounts()) WindowsAccounts.Add(readWindowsAccount);
+        }
     }
 }

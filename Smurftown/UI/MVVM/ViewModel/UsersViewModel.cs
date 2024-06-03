@@ -18,6 +18,7 @@ namespace Smurftown.UI.MVVM.ViewModel
         public UsersViewModel()
         {
             WindowsAccountLinked = _windowsAccountLinkedGateway.WindowsAccountsLinked;
+            _windowsAccountLinkedGateway.Reload();
         }
     }
 }

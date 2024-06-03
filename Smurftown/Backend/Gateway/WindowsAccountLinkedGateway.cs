@@ -118,6 +118,15 @@ public class WindowsAccountLinkedGateway
                 break;
 
             case NotifyCollectionChangedAction.Replace:
+                foreach (var removedWindowsUserAccount in (e.OldItems ?? new ArrayList()).Cast<WindowsUserAccount>())
+                {
+                    var oldWindowsUserAccountLinked = new WindowsUserAccountLinked()
+                    {
+                        BattlenetAccount = null,
+                        WindowsUserAccount = removedWindowsUserAccount
+                    };
+                    WindowsAccountsLinked.Remove(oldWindowsUserAccountLinked);
+                }
                 foreach (var addedWindowsUserAccount in (e.NewItems ?? new ArrayList()).Cast<WindowsUserAccount>())
                 {
                     var battlenetAccount = battlenetAccountsByBattletag!.GetValueOrDefault(addedWindowsUserAccount.Name.ToLower(), null);
@@ -150,5 +159,11 @@ public class WindowsAccountLinkedGateway
     private static string ByBattletag(WindowsUserAccount b)
     {
         return b.Name.ToLower();
+    }
+
+    public void Reload()
+    {
+        _windowsAccountGateway.Reload();
+        _battlenetAccountGateway.Reload();
     }
 }
