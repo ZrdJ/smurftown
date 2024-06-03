@@ -39,6 +39,8 @@
     <Resource Include="UI\Images\overwatchhots_full.png" />
     <Resource Include="UI\Images\overwatch_full.png" />
     <Resource Include="UI\Images\settings.png" />
+    <None Remove="UI\Images\windows.png" />
+    <Resource Include="UI\Images\windows.png" />
   </ItemGroup>
 
 </Project>

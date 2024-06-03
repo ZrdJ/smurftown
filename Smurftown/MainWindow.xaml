@@ -115,7 +115,7 @@ HorizontalAlignment="Right">
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Image HorizontalAlignment="Left" Source="pack://application:,,,/UI/Images/battlenet.png" RenderOptions.BitmapScalingMode="HighQuality" Height="50" Width="50" Margin="20,0,0,0"/>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="10,0,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="10,0,0,0">
                 <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Accounts" GroupName="Menu" IsChecked="True" Command="{Binding AccountsViewCommand}" Margin="10"/>
                 <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Benutzer" GroupName="Menu" Command="{Binding UsersViewCommand}" Margin="10"/>
             </StackPanel>

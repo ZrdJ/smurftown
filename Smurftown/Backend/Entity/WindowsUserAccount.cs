@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Smurftown.Backend.Entity
 {
-    class WindowsUserAccount
+    public class WindowsUserAccount
     {
         public required string Name { get; set; }
         public required string Password { get; set; }

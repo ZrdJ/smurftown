@@ -2,27 +2,28 @@
 using System.Windows;
 using System.Windows.Data;
 using Smurftown.Backend.Entity;
+using Smurftown.UI.MVVM.View;
 using Smurftown.UI.MVVM.ViewModel;
 
 namespace Smurftown.UI.MVVM.Converter;
 
-[ValueConversion(typeof(BattlenetAccount), typeof(AccountCardViewModel))]
-class BattlenetAccountToCardViewModelConverter : IValueConverter
+[ValueConversion(typeof(WindowsUserAccount), typeof(UserCardViewModel))]
+class WindowsAccountToCardViewModelConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is BattlenetAccount account)
+        if (value is WindowsUserAccount account)
         {
-            return new AccountCardViewModel(account);
+            return new UserCardViewModel(account);
         }
         return DependencyProperty.UnsetValue;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is AccountCardViewModel model)
+        if (value is UserCardViewModel model)
         {
-            return model.Account;
+            return model.User;
         }
         return DependencyProperty.UnsetValue;
     }

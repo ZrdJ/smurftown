@@ -23,6 +23,7 @@
                 <view:UsersView/>
             </DataTemplate>
             <viewConverter:BattlenetAccountToCardViewModelConverter x:Key="BattlenetAccountToCardViewModelConverter"/>
+            <viewConverter:WindowsAccountToCardViewModelConverter x:Key="WindowsAccountToCardViewModelConverter"/>
         </ResourceDictionary>
         
     </Application.Resources>

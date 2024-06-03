@@ -36,6 +36,7 @@ namespace Smurftown.Backend.Gateway
         public ObservableHashSet<WindowsUserAccount> WindowsAccounts { get => _windowsAccounts; }
         public WindowsAccountGateway()
         {
+            _windowsAccounts = new ObservableHashSet<WindowsUserAccount>(ReadWindowsAccounts());
         }
 
         public void Add(WindowsUserAccount account)
