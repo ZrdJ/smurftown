@@ -7,9 +7,9 @@ namespace Smurftown.UI.MVVM.ViewModel
     internal class AccountsViewModel: Observable
     {
         private static readonly BattlenetAccountGateway _battlenetAccountGateway = BattlenetAccountGateway.Instance;
-        private ObservableHashSet<BattlenetAccount> _battlenetAccounts;
+        private IReadOnlyList<BattlenetAccount> _battlenetAccounts;
 
-        public ObservableHashSet<BattlenetAccount> BattlenetAccounts
+        public IReadOnlyList<BattlenetAccount> BattlenetAccounts
         {
             get { return _battlenetAccounts; }
             set { _battlenetAccounts = value; OnPropertyChanged(); }

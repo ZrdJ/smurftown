@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Specialized;
-using Smurftown.Backend.Entity;
+﻿using Smurftown.Backend.Entity;
 
 namespace Smurftown.Backend.Gateway;
 
@@ -11,143 +9,31 @@ public class WindowsAccountLinkedGateway
     private readonly WindowsAccountGateway _windowsAccountGateway = WindowsAccountGateway.Instance;
     private readonly BattlenetAccountGateway _battlenetAccountGateway = BattlenetAccountGateway.Instance;
 
-    public ObservableHashSet<WindowsUserAccountLinked> WindowsAccountsLinked { get; } = [];
-    private ObservableHashSet<WindowsUserAccount> WindowsUserAccounts { get; set; }
-    private ObservableHashSet<BattlenetAccount> BattlenetAccounts { get; set;  }
+    private List<WindowsUserAccountLinked> _windowsUserAccountsLinked = [];
+
+    public IReadOnlyList<WindowsUserAccountLinked> WindowsAccountsLinked { get => _windowsUserAccountsLinked.AsReadOnly(); }
 
     private WindowsAccountLinkedGateway()
     {
-        WindowsUserAccounts = _windowsAccountGateway.WindowsAccounts;
-        WindowsUserAccounts.CollectionChanged += OnWindowsUserAccountsChanged;
-        BattlenetAccounts = _battlenetAccountGateway.BattlenetAccounts;
-        BattlenetAccounts.CollectionChanged += OnBattlenetAccountsChanged;
-        
         Reset();
     }
 
     private void Reset()
     {
-        var battlenetAccountsByBattletag = BattlenetAccounts.ToDictionary(ByBattletag);
-        foreach (var windowsUserAccount in WindowsUserAccounts)
+        _windowsAccountGateway.Reload();
+        _battlenetAccountGateway.Reload();
+        _windowsUserAccountsLinked.Clear();
+        var windowsAccounts = _windowsAccountGateway.WindowsAccounts;
+        var battlenetAccounts = _battlenetAccountGateway.BattlenetAccounts;
+        var battlenetAccountsByBattletag = battlenetAccounts.ToDictionary(ByBattletag);
+        foreach (var windowsUserAccount in windowsAccounts)
         {
             var battlenetAccount = battlenetAccountsByBattletag!.GetValueOrDefault(windowsUserAccount.Name.ToLower(), null);
-            WindowsAccountsLinked.Add(new WindowsUserAccountLinked()
+            _windowsUserAccountsLinked.Add(new WindowsUserAccountLinked()
             {
                 BattlenetAccount = battlenetAccount,
                 WindowsUserAccount = windowsUserAccount
             });
-        }
-    }
-
-    private void OnBattlenetAccountsChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        var windowsAccountsByBattletag = WindowsUserAccounts.ToDictionary(ByBattletag);
-        switch (e.Action)
-        {
-            case NotifyCollectionChangedAction.Add:
-                foreach (var addedBattlenetAccount in (e.NewItems ?? new ArrayList()).Cast<BattlenetAccount>())
-                {
-                    var windowsAccount = windowsAccountsByBattletag!.GetValueOrDefault(ByBattletag(addedBattlenetAccount), null);
-                    if (windowsAccount == null) continue;
-                    var newWindowsUserAccountLinked = new WindowsUserAccountLinked()
-                    {
-                        BattlenetAccount = addedBattlenetAccount,
-                        WindowsUserAccount = windowsAccount
-                    };
-                    WindowsAccountsLinked.Add(newWindowsUserAccountLinked);
-                }
-                break;
-
-            case NotifyCollectionChangedAction.Remove:
-                foreach (var removedBattlenetAccount in (e.NewItems ?? new ArrayList()).Cast<BattlenetAccount>())
-                {
-                    var windowsAccount = windowsAccountsByBattletag!.GetValueOrDefault(ByBattletag(removedBattlenetAccount), null);
-                    if (windowsAccount == null) continue;
-                    var newWindowsUserAccountLinked = new WindowsUserAccountLinked()
-                    {
-                        BattlenetAccount = null,
-                        WindowsUserAccount = windowsAccount
-                    };
-                    WindowsAccountsLinked.Add(newWindowsUserAccountLinked);
-                }
-                break;
-
-            case NotifyCollectionChangedAction.Replace:
-                // we dont care
-                break;
-
-            case NotifyCollectionChangedAction.Move:
-                // we dont care
-                break;
-
-            case NotifyCollectionChangedAction.Reset:
-                Reset();
-                break;
-        }
-    }
-
-    private void OnWindowsUserAccountsChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        var battlenetAccountsByBattletag = BattlenetAccounts.ToDictionary(ByBattletag);
-        
-        switch (e.Action)
-        {
-            case NotifyCollectionChangedAction.Add:
-                foreach (var addedWindowsUserAccount in (e.NewItems ?? new ArrayList()).Cast<WindowsUserAccount>())
-                {
-                    var battlenetAccount = battlenetAccountsByBattletag!.GetValueOrDefault(addedWindowsUserAccount.Name.ToLower(), null);
-                    var newWindowsUserAccountLinked = new WindowsUserAccountLinked()
-                    {
-                        BattlenetAccount = battlenetAccount,
-                        WindowsUserAccount = addedWindowsUserAccount
-                    };
-                    WindowsAccountsLinked.Add(newWindowsUserAccountLinked);
-                }
-                break;
-
-            case NotifyCollectionChangedAction.Remove:
-                foreach (var removedWindowsUserAccount in (e.OldItems ?? new ArrayList()).Cast<WindowsUserAccount>())
-                {
-                  
-                    WindowsAccountsLinked.Remove(new WindowsUserAccountLinked()
-                    {
-                        BattlenetAccount = null,
-                        WindowsUserAccount = removedWindowsUserAccount
-                    });
-                }
-                break;
-
-            case NotifyCollectionChangedAction.Replace:
-                foreach (var removedWindowsUserAccount in (e.OldItems ?? new ArrayList()).Cast<WindowsUserAccount>())
-                {
-                    var oldWindowsUserAccountLinked = new WindowsUserAccountLinked()
-                    {
-                        BattlenetAccount = null,
-                        WindowsUserAccount = removedWindowsUserAccount
-                    };
-                    WindowsAccountsLinked.Remove(oldWindowsUserAccountLinked);
-                }
-                foreach (var addedWindowsUserAccount in (e.NewItems ?? new ArrayList()).Cast<WindowsUserAccount>())
-                {
-                    var battlenetAccount = battlenetAccountsByBattletag!.GetValueOrDefault(addedWindowsUserAccount.Name.ToLower(), null);
-                    var newWindowsUserAccountLinked = new WindowsUserAccountLinked()
-                    {
-                        BattlenetAccount = battlenetAccount,
-                        WindowsUserAccount = addedWindowsUserAccount
-                    };
-                    WindowsAccountsLinked.Add(newWindowsUserAccountLinked);
-                }
-                break;
-
-            case NotifyCollectionChangedAction.Move:
-                // we dont care
-                break;
-
-            case NotifyCollectionChangedAction.Reset:
-                Reset();
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
         }
     }
 
@@ -163,7 +49,6 @@ public class WindowsAccountLinkedGateway
 
     public void Reload()
     {
-        _windowsAccountGateway.Reload();
-        _battlenetAccountGateway.Reload();
+        Reset();
     }
 }

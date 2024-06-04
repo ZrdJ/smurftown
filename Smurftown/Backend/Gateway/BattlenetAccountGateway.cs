@@ -1,5 +1,6 @@
 ﻿using Smurftown.Backend.Entity;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,18 +18,18 @@ namespace Smurftown.Backend.Gateway
         
         private readonly string _configDirectory = AppDomain.CurrentDomain.BaseDirectory;
         private readonly string _configFile;
-        private readonly ObservableHashSet<BattlenetAccount> _battlenetAccounts;
+        private readonly List<BattlenetAccount> _battlenetAccounts;
         private readonly ISerializer _yamlOut = new SerializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
         private readonly IDeserializer _yamlIn = new DeserializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)
             .Build();
-        public ObservableHashSet<BattlenetAccount> BattlenetAccounts { get => _battlenetAccounts; }
+        public IReadOnlyList<BattlenetAccount> BattlenetAccounts { get => _battlenetAccounts.AsReadOnly(); }
         private BattlenetAccountGateway()
         {
             _configFile = Path.Combine(_configDirectory, "data.yaml");
-            _battlenetAccounts = new ObservableHashSet<BattlenetAccount>(ReadFromConfigFile());
+            _battlenetAccounts = new List<BattlenetAccount>(ReadFromConfigFile());
         }
 
         public void AddOrUpdate(BattlenetAccount account)

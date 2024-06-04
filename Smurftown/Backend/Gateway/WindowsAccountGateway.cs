@@ -1,5 +1,6 @@
 ﻿using System.Management;
 using System.Runtime.InteropServices;
+using System.Windows.Documents;
 using Smurftown.Backend.Entity;
 
 namespace Smurftown.Backend.Gateway
@@ -28,11 +29,11 @@ namespace Smurftown.Backend.Gateway
         private const uint UF_SCRIPT = 1;
         private const uint UF_DONT_EXPIRE_PASSWD = 0x10000;
 
-        private readonly ObservableHashSet<WindowsUserAccount> _windowsAccounts = [];
-        public ObservableHashSet<WindowsUserAccount> WindowsAccounts { get => _windowsAccounts; }
+        private List<WindowsUserAccount> _windowsAccounts;
+        public IReadOnlyList<WindowsUserAccount> WindowsAccounts { get => _windowsAccounts.AsReadOnly(); }
         private WindowsAccountGateway()
         {
-            _windowsAccounts = new ObservableHashSet<WindowsUserAccount>(ReadWindowsAccounts());
+            _windowsAccounts = [..ReadWindowsAccounts()];
         }
 
         public void Add(WindowsUserAccount account)
@@ -71,8 +72,7 @@ namespace Smurftown.Backend.Gateway
 
         public void Reload()
         {
-            WindowsAccounts.Clear();
-            foreach (var readWindowsAccount in ReadWindowsAccounts()) WindowsAccounts.Add(readWindowsAccount);
+            _windowsAccounts = [..ReadWindowsAccounts()];
         }
     }
 }

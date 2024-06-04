@@ -7,9 +7,9 @@ namespace Smurftown.UI.MVVM.ViewModel
     internal class UsersViewModel: Observable
     {
         private static readonly WindowsAccountLinkedGateway _windowsAccountLinkedGateway = WindowsAccountLinkedGateway.Instance;
-        private ObservableHashSet<WindowsUserAccountLinked> _windowsUserAccountsLinked;
+        private IReadOnlyList<WindowsUserAccountLinked> _windowsUserAccountsLinked;
 
-        public ObservableHashSet<WindowsUserAccountLinked> WindowsAccountLinked
+        public IReadOnlyList<WindowsUserAccountLinked> WindowsAccountLinked
         {
             get { return _windowsUserAccountsLinked; }
             set { _windowsUserAccountsLinked = value; OnPropertyChanged(); }
@@ -17,8 +17,8 @@ namespace Smurftown.UI.MVVM.ViewModel
         
         public UsersViewModel()
         {
-            WindowsAccountLinked = _windowsAccountLinkedGateway.WindowsAccountsLinked;
             _windowsAccountLinkedGateway.Reload();
+            WindowsAccountLinked = _windowsAccountLinkedGateway.WindowsAccountsLinked;
         }
     }
 }
