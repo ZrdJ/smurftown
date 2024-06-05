@@ -1,5 +1,7 @@
 ﻿using System.Collections.Immutable;
+using System.ComponentModel;
 using System.IO;
+using System.Windows.Data;
 using Smurftown.Backend.Entity;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -9,7 +11,6 @@ namespace Smurftown.Backend.Gateway
     public class BattlenetAccountGateway
     {
         public static readonly BattlenetAccountGateway Instance = new();
-        private readonly SortedSet<BattlenetAccount> _battlenetAccounts;
 
         private readonly string _configDirectory = AppDomain.CurrentDomain.BaseDirectory;
         private readonly string _configFile;
@@ -25,25 +26,51 @@ namespace Smurftown.Backend.Gateway
         private BattlenetAccountGateway()
         {
             _configFile = Path.Combine(_configDirectory, "data.yaml");
-            _battlenetAccounts = new SortedSet<BattlenetAccount>(ReadFromConfigFile());
+            foreach (var account in ReadFromConfigFile())
+            {
+                BattlenetAccounts.Add(account);
+            };
+            BattlenetAccountsFiltered = CollectionViewSource.GetDefaultView(BattlenetAccounts);
         }
 
-        public IReadOnlyList<BattlenetAccount> BattlenetAccounts
+        public void FilterBy(bool overwatch, bool hots)
         {
-            get => _battlenetAccounts.ToImmutableSortedSet();
+           
+            BattlenetAccountsFiltered.Filter = (obj) =>
+            {
+                if (obj is BattlenetAccount account)
+                {
+                    if (overwatch && hots)
+                    {
+                        return account.Overwatch || account.Hots;
+                    }
+                    return overwatch ? account.Overwatch : true && hots ? account.Hots == hots : true;
+                }
+                return false;
+            };
+        }
+       
+
+        public ObservableHashSet<BattlenetAccount> BattlenetAccounts
+        {
+            get; set;
+        } = new ObservableHashSet<BattlenetAccount>();
+
+        public ICollectionView BattlenetAccountsFiltered
+        {
+            get; set;
         }
 
         public void AddOrUpdate(BattlenetAccount account)
         {
-            _battlenetAccounts.Add(account);
-
-            var content = _yamlOut.Serialize(_battlenetAccounts.AsEnumerable());
-            File.WriteAllText(_configFile, content);
+            BattlenetAccounts.Add(account);
+            SaveToConfigFile();
         }
 
         public void Remove(BattlenetAccount account)
         {
-            _battlenetAccounts.Remove(account);
+            BattlenetAccounts.Remove(account);
+            SaveToConfigFile();
         }
 
         private List<BattlenetAccount> ReadFromConfigFile()
@@ -57,7 +84,7 @@ namespace Smurftown.Backend.Gateway
         private void SaveToConfigFile()
         {
             ensureConfigFileExists();
-            var content = _yamlOut.Serialize(_battlenetAccounts.AsEnumerable());
+            var content = _yamlOut.Serialize(BattlenetAccounts.AsEnumerable());
             File.WriteAllText(_configFile, content);
         }
 
@@ -71,8 +98,7 @@ namespace Smurftown.Backend.Gateway
 
         public void Reload()
         {
-            _battlenetAccounts.Clear();
-            foreach (var battlenetAccount in ReadFromConfigFile()) _battlenetAccounts.Add(battlenetAccount);
+            foreach (var battlenetAccount in ReadFromConfigFile()) BattlenetAccounts.Add(battlenetAccount);
         }
     }
 }
