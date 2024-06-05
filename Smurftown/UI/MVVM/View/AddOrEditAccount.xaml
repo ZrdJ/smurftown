@@ -74,6 +74,16 @@
                     <Image Source="pack://application:,,,/UI/Images/hots.png"
                            RenderOptions.BitmapScalingMode="HighQuality" Height="35" Width="35" />
                 </ToggleButton>
+                <ToggleButton IsChecked="{Binding WowChecked}" Style="{StaticResource BattlenetIconButtonTheme}"
+              Margin="10,0,0,0" Width="50">
+                    <Image Source="pack://application:,,,/UI/Images/wow.png"
+           RenderOptions.BitmapScalingMode="HighQuality" Height="35" Width="35" />
+                </ToggleButton>
+                <ToggleButton IsChecked="{Binding DiabloChecked}" Style="{StaticResource BattlenetIconButtonTheme}"
+              Margin="10,0,0,0" Width="50">
+                    <Image Source="pack://application:,,,/UI/Images/diablo4.png"
+           RenderOptions.BitmapScalingMode="HighQuality" Height="35" Width="35" />
+                </ToggleButton>
             </StackPanel>
         </StackPanel>
         <Separator Background="#313339" Margin="0,170,0,20" />

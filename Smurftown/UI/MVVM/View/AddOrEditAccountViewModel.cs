@@ -16,15 +16,19 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
     private bool? _dialogResult;
     private long? _discriminator;
     private string? _email;
-    private bool _hotsChecked;
     private string? _name;
     private bool _overwatchChecked;
+    private bool _hotsChecked;
+    private bool _wowChecked;
+    private bool _diabloChecked;
     private bool _saveButtonEnabled;
 
     public AddOrEditAccountViewModel(BattlenetAccount? account)
     {
         OverwatchChecked = account?.Overwatch ?? false;
         HotsChecked = account?.Hots ?? false;
+        WowChecked = account?.Wow ?? false;
+        DiabloChecked = account?.Diablo ?? false;
         Name = account?.Name ?? "";
         Discrimnator = account != null ? long.Parse(account.Discriminator) : null;
         Email = account?.Email ?? "";
@@ -94,6 +98,28 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
         }
     }
 
+    public bool DiabloChecked
+    {
+        get => _diabloChecked;
+        set
+        {
+            if (value == _diabloChecked) return;
+            _diabloChecked = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool WowChecked
+    {
+        get => _wowChecked;
+        set
+        {
+            if (value == _wowChecked) return;
+            _wowChecked = value;
+            OnPropertyChanged();
+        }
+    }
+
     public bool HotsChecked
     {
         get => _hotsChecked;
@@ -154,7 +180,9 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
             Email = Email!,
             Password = Password!,
             Overwatch = OverwatchChecked,
-            Hots = HotsChecked
+            Hots = HotsChecked,
+            Wow = WowChecked,
+            Diablo = DiabloChecked
         };
 
         _battlenetAccountGateway.AddOrUpdate(account);

@@ -22,6 +22,8 @@
         public required string Password { get; set; }
         public required Boolean Overwatch { get; set; }
         public required Boolean Hots { get; set; }
+        public required Boolean Wow { get; set; }
+        public required Boolean Diablo { get; set; }
 
         public int CompareTo(BattlenetAccount? other)
         {

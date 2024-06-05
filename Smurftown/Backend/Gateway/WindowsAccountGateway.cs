@@ -73,7 +73,7 @@ namespace Smurftown.Backend.Gateway
             var result = NetUserAdd(null, 1, ref userInfo, out parm_err);
             if (result != 0)
             {
-                throw new InvalidOperationException("Unable to create Windows User for Battlenet Account. Maybe the user already exists. Otherwise please makre sure to start this application as a administrator.");
+                throw new InvalidOperationException("We were unable to create a windows user for this account.Please make sure to start this application as a administrator to avoid such errors.");
             }
             
         }

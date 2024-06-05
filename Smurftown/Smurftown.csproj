@@ -12,17 +12,19 @@
     <None Remove="UI\Images\add.png" />
     <None Remove="UI\Images\battlenet.png" />
     <None Remove="UI\Images\copy.png" />
+    <None Remove="UI\Images\diablo4.png" />
     <None Remove="UI\Images\hots.png" />
     <None Remove="UI\Images\hots_full.png" />
     <None Remove="UI\Images\overwatch.png" />
     <None Remove="UI\Images\overwatchhots_full.png" />
     <None Remove="UI\Images\overwatch_full.png" />
     <None Remove="UI\Images\settings.png" />
+    <None Remove="UI\Images\wow.png" />
   </ItemGroup>
 
   <ItemGroup>
-      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2"/>
-      <PackageReference Include="MvvmDialogs" Version="9.1.2"/>
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+      <PackageReference Include="MvvmDialogs" Version="9.1.2" />
     <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="YamlDotNet" Version="15.1.6" />
   </ItemGroup>
@@ -31,6 +33,7 @@
     <Resource Include="UI\Images\add.png" />
     <Resource Include="UI\Images\battlenet.png" />
     <Resource Include="UI\Images\copy.png" />
+    <Resource Include="UI\Images\diablo4.png" />
     <Resource Include="UI\Images\hots.png" />
     <Resource Include="UI\Images\hots_full.png" />
     <Resource Include="UI\Images\overwatch.png" />
@@ -39,6 +42,7 @@
     <Resource Include="UI\Images\settings.png" />
     <None Remove="UI\Images\windows.png" />
     <Resource Include="UI\Images\windows.png" />
+    <Resource Include="UI\Images\wow.png" />
   </ItemGroup>
 
     <ItemGroup>

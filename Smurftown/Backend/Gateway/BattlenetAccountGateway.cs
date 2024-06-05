@@ -35,18 +35,19 @@ namespace Smurftown.Backend.Gateway
             BattlenetAccountsFiltered.SortDescriptions.Add(new SortDescription(nameof(BattlenetAccount.Name), ListSortDirection.Ascending));
         }
 
-        public void FilterBy(bool overwatch, bool hots)
+        public void FilterBy(bool overwatch, bool hots, bool diablo, bool wow)
         {
            
             BattlenetAccountsFiltered.Filter = (obj) =>
             {
                 if (obj is BattlenetAccount account)
                 {
-                    if (overwatch && hots)
-                    {
-                        return account.Overwatch || account.Hots;
-                    }
-                    return overwatch ? account.Overwatch : true && hots ? account.Hots == hots : true;
+                    
+                    return overwatch ? account.Overwatch : true 
+                        && hots ? account.Hots : true
+                        && wow ? account.Wow : true
+                        && diablo ? account.Diablo : true
+                        ;
                 }
                 return false;
             };
