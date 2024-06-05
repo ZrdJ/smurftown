@@ -1,11 +1,14 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MvvmDialogs;
 using Smurftown.Backend.Entity;
 using Smurftown.Backend.Gateway;
 
 namespace Smurftown.UI.MVVM.View;
 
-public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
+public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
 {
     private static readonly BattlenetAccountGateway _battlenetAccountGateway = BattlenetAccountGateway.Instance;
     private static readonly WindowsAccountGateway _windowsAccountGateway = WindowsAccountGateway.Instance;
@@ -26,8 +29,8 @@ public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
         Discrimnator = account != null ? long.Parse(account.Discriminator) : null;
         Email = account?.Email ?? "";
         Password = account?.Password ?? "";
-        OkCommand = new RelayCommand((ignore) => Ok());
-        CancelCommand = new RelayCommand((ignore) => Cancel());
+        OkCommand = new RelayCommand(Ok);
+        CancelCommand = new RelayCommand(Cancel);
         RefreshDialog();
     }
 
@@ -117,9 +120,9 @@ public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
         DialogResult = false;
     }
 
-    protected override void OnPropertyChanged(string? callerMemberName = null)
+    protected override void OnPropertyChanged(PropertyChangedEventArgs propertyChangedEventArgs)
     {
-        base.OnPropertyChanged(callerMemberName);
+        base.OnPropertyChanged(propertyChangedEventArgs);
         RefreshDialog();
     }
 

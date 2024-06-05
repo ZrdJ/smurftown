@@ -1,4 +1,6 @@
 ﻿using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MvvmDialogs;
 using Smurftown.Backend.Entity;
 using Smurftown.Backend.Gateway;
@@ -6,7 +8,7 @@ using Smurftown.UI.MVVM.View;
 
 namespace Smurftown.UI.MVVM.ViewModel
 {
-    class AccountCardViewModel : Observable
+    class AccountCardViewModel : ObservableObject
     {
         private static readonly WindowsAccountGateway _windowsAccountGateway = WindowsAccountGateway.Instance;
         private static readonly IDialogService _dialogService = new DialogService();
@@ -61,8 +63,8 @@ namespace Smurftown.UI.MVVM.ViewModel
                 if (_openBattlenetCommand == null)
                 {
                     _openBattlenetCommand = new RelayCommand(
-                        param => this.OpenBattlenet(),
-                        param => this.CanOpenBattlenet()
+                        this.OpenBattlenet,
+                        this.CanOpenBattlenet
                     );
                 }
 
@@ -77,8 +79,8 @@ namespace Smurftown.UI.MVVM.ViewModel
                 if (_openSettingsCommand == null)
                 {
                     _openSettingsCommand = new RelayCommand(
-                        param => this.OpenSettings(),
-                        param => this.CanOpenSettings()
+                        OpenSettings,
+                        CanOpenSettings
                     );
                 }
 

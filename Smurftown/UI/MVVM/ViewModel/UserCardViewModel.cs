@@ -1,14 +1,21 @@
 ﻿using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Smurftown.Backend.Entity;
 
 namespace Smurftown.UI.MVVM.ViewModel;
 
-public class UserCardViewModel : Observable
+public class UserCardViewModel : ObservableObject
 {
-    private WindowsUserAccountLinked? _user;
-    private Visibility _hasAccountLinked = Visibility.Hidden;
-    private string _username = null;
     private string _battletag = null;
+    private Visibility _hasAccountLinked = Visibility.Hidden;
+    private WindowsUserAccountLinked? _user;
+    private string _username = null;
+
+    public UserCardViewModel(WindowsUserAccountLinked user) => User = user;
+
+    public UserCardViewModel()
+    {
+    }
 
     public Visibility HasAccountLinked
     {
@@ -19,6 +26,7 @@ public class UserCardViewModel : Observable
             OnPropertyChanged();
         }
     }
+
     public WindowsUserAccountLinked? User
     {
         get { return _user; }
@@ -41,7 +49,7 @@ public class UserCardViewModel : Observable
             OnPropertyChanged();
         }
     }
-    
+
     public string Battletag
     {
         get { return _battletag; }
@@ -50,11 +58,5 @@ public class UserCardViewModel : Observable
             _battletag = value;
             OnPropertyChanged();
         }
-    }
-
-    public UserCardViewModel(WindowsUserAccountLinked user) => User = user;
-
-    public UserCardViewModel()
-    {
     }
 }
