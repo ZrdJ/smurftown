@@ -4,6 +4,7 @@ using MvvmDialogs;
 using Smurftown.UI.MVVM.View;
 using System.Security.Principal;
 using System.Windows;
+using ToastNotifications.Messages;
 
 namespace Smurftown.UI.MVVM.ViewModel
 {
@@ -32,7 +33,8 @@ namespace Smurftown.UI.MVVM.ViewModel
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             // Log and/or display the exception
-            ShowErrorDialog(viewModel => Dialogs.DialogService.ShowDialog(this, viewModel), e.Exception);
+            //ShowErrorDialog(viewModel => Dialogs.DialogService.ShowDialog(this, viewModel), e.Exception);
+            Dialogs.Toast.ShowError(e.Exception.Message);
             //Dialogs.DialogService.ShowMessageBox(this, caption: "An error occured", messageBoxText: e.Exception.Message);
             //MessageBox.Show($"{e.Exception.Message}", "Application Error", MessageBoxButton.OK, MessageBoxImage.Error);
             e.Handled = true; // Prevent the application from crashing

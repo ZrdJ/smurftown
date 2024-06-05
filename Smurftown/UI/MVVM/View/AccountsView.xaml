@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
              xmlns:local="clr-namespace:Smurftown.UI.MVVM.View"
              xmlns:viewModel="clr-namespace:Smurftown.UI.MVVM.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
+             md:DialogServiceViews.IsRegistered="True"
              Background="Transparent">
     
     <UserControl.DataContext>
@@ -37,9 +39,9 @@
             <ToggleButton IsChecked="{Binding DiabloFiltered}" Style="{StaticResource BattlenetIconButtonTheme}" Margin="0" Width="50">
                 <Image Source="pack://application:,,,/UI/Images/diablo4.png"  RenderOptions.BitmapScalingMode="HighQuality" Height="35" Width="35" />
             </ToggleButton>
-            <ToggleButton HorizontalAlignment="Right" Style="{StaticResource BattlenetIconButtonTheme}" Margin="0" Width="60">
-                <Image Source="pack://application:,,,/UI/Images/add.png"  Height="35" Width="35" />
-            </ToggleButton>
+            <Button Command="{Binding CreateAccountCommand}" Background="Transparent" HorizontalAlignment="Right" BorderBrush="Transparent" Style="{StaticResource BattlenetButtonSecondaryTheme}" Margin="0,0,30,0" Width="60">
+                <Image Source="pack://application:,,,/UI/Images/add.png"  Height="35" Width="35"/>
+            </Button>
 
         </DockPanel>
 

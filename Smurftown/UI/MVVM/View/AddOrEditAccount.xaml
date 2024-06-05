@@ -53,7 +53,7 @@
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="ACCOUNT PASSWORD" Foreground="#8F8F92" FontSize="14" FontWeight="Bold"
                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" />
-                <PasswordBox PasswordChanged="PasswordChanged" Password="Placeholder" HorizontalAlignment="Left"
+                <PasswordBox PasswordChanged="PasswordChanged" local:PasswordBoxHelper.BoundPassword="{Binding Password}" HorizontalAlignment="Left"
                              FontSize="14"
                              Style="{StaticResource BattlenetPasswordBoxTheme}"
                              Width="300" Height="30" Margin="20,10,0,20" />

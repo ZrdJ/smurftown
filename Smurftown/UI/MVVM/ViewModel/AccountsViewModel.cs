@@ -1,8 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Smurftown.Backend;
 using Smurftown.Backend.Entity;
 using Smurftown.Backend.Gateway;
+using Smurftown.UI.MVVM.View;
 using System.ComponentModel;
+using System.Security.Principal;
+using System.Windows.Input;
 
 namespace Smurftown.UI.MVVM.ViewModel
 {
@@ -14,11 +18,46 @@ namespace Smurftown.UI.MVVM.ViewModel
         private bool _hotsFiltered;
         private bool _wowFiltered;
         private bool _diabloFiltered;
+        private RelayCommand _createAccountCommand;
 
         public AccountsViewModel()
         {
             _battlenetAccountGateway.Reload();
             BattlenetAccounts = _battlenetAccountGateway.BattlenetAccountsFiltered;
+        }
+
+        public ICommand CreateAccountCommand
+        {
+            get
+            {
+                if (_createAccountCommand == null)
+                {
+                    _createAccountCommand = new RelayCommand(
+                        this.CreateAccount,
+                        this.CanCreateAccount
+                    );
+                }
+
+                return _createAccountCommand;
+            }
+        }
+
+        private bool CanCreateAccount()
+        {
+            return true;
+        }
+
+        private void CreateAccount()
+        {
+            ShowDialog(viewModel => Dialogs.DialogService.ShowDialog(this, viewModel));
+        }
+
+        private void ShowDialog(Func<AddOrEditAccountViewModel, bool?> showDialog)
+        {
+            var dialogViewModel = new AddOrEditAccountViewModel(null);
+
+            var success = showDialog(dialogViewModel);
+            dialogViewModel.Execute(success);
         }
 
         public bool OverwatchFiltered { get => _overwatchFiltered; set => SetProperty(ref _overwatchFiltered, value); }

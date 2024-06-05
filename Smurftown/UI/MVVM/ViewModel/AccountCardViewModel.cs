@@ -20,6 +20,7 @@ namespace Smurftown.UI.MVVM.ViewModel
 
         private RelayCommand _openBattlenetCommand;
         private RelayCommand _openSettingsCommand;
+        private RelayCommand _copyPasswordCommand;
         public AccountCardViewModel(BattlenetAccount account)
         {
             Account = account;
@@ -91,6 +92,32 @@ namespace Smurftown.UI.MVVM.ViewModel
                 _imageSource = value;
                 OnPropertyChanged();
             }
+        }
+
+        public ICommand CopyPasswordCommand
+        {
+            get
+            {
+                if (_copyPasswordCommand == null)
+                {
+                    _copyPasswordCommand = new RelayCommand(
+                        this.CopyPassword,
+                        this.CanCopyPassword
+                    );
+                }
+
+                return _copyPasswordCommand;
+            }
+        }
+
+        private bool CanCopyPassword()
+        {
+            return true;
+        }
+
+        private void CopyPassword()
+        {
+            Clipboard.SetText(_account?.Password);
         }
 
         public ICommand OpenBattlenetCommand
