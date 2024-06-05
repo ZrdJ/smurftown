@@ -55,7 +55,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:AccountCardView Width="200" Height="200" Margin="5">
+                        <local:AccountCardView Margin="5">
                             <local:AccountCardView.DataContext>
                                 <Binding Path="." Converter="{StaticResource BattlenetAccountToCardViewModelConverter}" />
                             </local:AccountCardView.DataContext>

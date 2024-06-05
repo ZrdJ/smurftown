@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmDialogs;
@@ -19,10 +20,46 @@ namespace Smurftown.UI.MVVM.ViewModel
 
         private RelayCommand _openBattlenetCommand;
         private RelayCommand _openSettingsCommand;
-        public AccountCardViewModel(BattlenetAccount account) => Account = account;
+        public AccountCardViewModel(BattlenetAccount account)
+        {
+            Account = account;
+            Overwatch = account.Overwatch ? Visibility.Visible : Visibility.Collapsed;
+            Hots = account.Hots ? Visibility.Visible : Visibility.Collapsed;
+            Diablo = account.Diablo ? Visibility.Visible : Visibility.Collapsed;
+            Wow = account.Wow ? Visibility.Visible : Visibility.Collapsed;
+        }
 
         public AccountCardViewModel()
         {
+        }
+
+        private Visibility _overwatch;
+        private Visibility _hots;
+        private Visibility _diablo;
+        private Visibility _wow;
+
+        public Visibility Overwatch
+        {
+            get { return _overwatch; }
+            set { SetProperty(ref _overwatch , value); }
+        }
+
+        public Visibility Hots
+        {
+            get { return _hots; }
+            set { SetProperty(ref _hots, value); }
+        }
+
+        public Visibility Wow
+        {
+            get { return _wow; }
+            set { SetProperty(ref _wow, value); }
+        }
+
+        public Visibility Diablo
+        {
+            get { return _diablo; }
+            set { SetProperty(ref _diablo, value); }
         }
 
         public BattlenetAccount? Account
