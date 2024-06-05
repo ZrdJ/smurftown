@@ -4,46 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:Smurftown.UI.MVVM.ViewModel"
-        xmlns:local="clr-namespace:Smurftown"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         mc:Ignorable="d"
         UseLayoutRounding="True"
         Title="MainWindow" Height="800" Width="1200"
         ResizeMode="NoResize"
         WindowStyle="None"
-        >
+        md:DialogServiceViews.IsRegistered="True">
     <Window.DataContext>
-        <viewModel:MainViewModel/>
+        <viewModel:MainViewModel />
     </Window.DataContext>
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#15171e" Offset="0.0"/>
-            <GradientStop Color="#1c1e27" Offset="1.0"/>
+            <GradientStop Color="#15171E" Offset="0.0" />
+            <GradientStop Color="#15171E" Offset="1.0" />
         </LinearGradientBrush>
     </Window.Background>
-    
+
     <Window.Resources>
         <Style x:Key="WindowButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Width" Value="30"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="0,0,5,0" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                                BorderBrush="Transparent" 
-                                BorderThickness="0" 
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
                                 CornerRadius="0">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF3E3E3E"/>
+                                <Setter Property="Background" Value="#FF3E3E3E" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#FF2D2D2D"/>
+                                <Setter Property="Background" Value="#FF2D2D2D" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -52,23 +52,23 @@
         </Style>
 
         <Style x:Key="CloseButtonStyle" BasedOn="{StaticResource WindowButtonStyle}" TargetType="Button">
-            <Setter Property="Content" Value="X"/>
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Content" Value="X" />
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                                BorderBrush="Transparent" 
-                                BorderThickness="0" 
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
                                 CornerRadius="0">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FFB22222"/>
+                                <Setter Property="Background" Value="#FFB22222" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#FF8B0000"/>
+                                <Setter Property="Background" Value="#FF8B0000" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -83,46 +83,50 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="70"/>
-            <RowDefinition/>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="70" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" LastChildFill="True"
-             MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
+                   MouseLeftButtonDown="DockPanel_MouseLeftButtonDown">
 
             <DockPanel.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#15171e" Offset="0.0"/>
-                    <GradientStop Color="#1c1e27" Offset="1.0"/>
+                    <GradientStop Color="#15171E" Offset="0.0" />
+                    <GradientStop Color="#15171E" Offset="1.0" />
                 </LinearGradientBrush>
             </DockPanel.Background>
             <Grid DockPanel.Dock="Right"
-HorizontalAlignment="Right">
+                  HorizontalAlignment="Right">
 
                 <StackPanel Orientation="Horizontal"
-          HorizontalAlignment="Right"
-          VerticalAlignment="Center">
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center">
 
-                    <Button Style="{StaticResource WindowButtonStyle}" Content="_" Click="Minimize_Click"/>
-                    <Button Style="{StaticResource WindowButtonStyle}" Content="[ ]" Click="Maximize_Click"/>
-                    <Button Style="{StaticResource CloseButtonStyle}" Content="x" Click="Close_Click"/>
+                    <Button Style="{StaticResource WindowButtonStyle}" Content="_" Click="Minimize_Click" />
+                    <Button Style="{StaticResource WindowButtonStyle}" Content="[ ]" Click="Maximize_Click" />
+                    <Button Style="{StaticResource CloseButtonStyle}" Content="x" Click="Close_Click" />
 
                 </StackPanel>
             </Grid>
         </DockPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Image HorizontalAlignment="Left" Source="pack://application:,,,/UI/Images/battlenet.png" RenderOptions.BitmapScalingMode="HighQuality" Height="50" Width="50" Margin="20,0,0,0"/>
+            <Image HorizontalAlignment="Left" Source="pack://application:,,,/UI/Images/battlenet.png"
+                   RenderOptions.BitmapScalingMode="HighQuality" Height="50" Width="50" Margin="20,0,0,0" />
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="10,0,0,0">
-                <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Accounts" GroupName="Menu" IsChecked="True" Command="{Binding AccountsViewCommand}" Margin="10"/>
-                <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Benutzer" GroupName="Menu" Command="{Binding UsersViewCommand}" Margin="10"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                        Background="Transparent" Margin="10,0,0,0">
+                <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Accounts" GroupName="Menu"
+                             IsChecked="True" Command="{Binding AccountsViewCommand}" Margin="10" />
+                <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Benutzer" GroupName="Menu"
+                             Command="{Binding UsersViewCommand}" Margin="10" />
             </StackPanel>
 
         </StackPanel>
 
-        <ContentControl Grid.Row="2" Content="{Binding CurrentView}"/>
+        <ContentControl Grid.Row="2" Content="{Binding CurrentView}" />
 
 
     </Grid>

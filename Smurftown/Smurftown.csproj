@@ -21,10 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UI\MVVM\Model\" />
-  </ItemGroup>
-
-  <ItemGroup>
+      <PackageReference Include="MvvmDialogs" Version="9.1.2"/>
     <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="YamlDotNet" Version="15.1.6" />
   </ItemGroup>
@@ -42,5 +39,16 @@
     <None Remove="UI\Images\windows.png" />
     <Resource Include="UI\Images\windows.png" />
   </ItemGroup>
+
+    <ItemGroup>
+        <Page Update="UI\MVVM\View\Dialog\AddOrEditAccount.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="UI\MVVM\Views\AddOrEditAccount.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
 
 </Project>

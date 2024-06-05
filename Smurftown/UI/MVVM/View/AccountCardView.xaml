@@ -5,7 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="220" d:DesignWidth="220">
+             xmlns:viewModel="clr-namespace:Smurftown.UI.MVVM.ViewModel"
+             xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+             md:DialogServiceViews.IsRegistered="True"
+             d:DesignHeight="220" d:DesignWidth="220"
+             d:DataContext="{d:DesignInstance {x:Type viewModel:AccountCardViewModel}}">
 
     <Border Background="#25262a" CornerRadius="10" Padding="0" Margin="5">
         <DockPanel>
@@ -30,7 +34,7 @@
                     <Button Style="{StaticResource BattlenetButtonPrimaryTheme}" Content="Öffnen" Width="90"
                             Height="30" Command="{Binding Path=OpenBattlenetCommand}" />
                     <Button Style="{StaticResource BattlenetButtonSecondaryTheme}" Width="40" Height="30"
-                            Margin="5,0,0,0">
+                            Margin="5,0,0,0" Command="{Binding Path=OpenSettingsCommand}">
                         <Image Source="pack://application:,,,/UI/Images/settings.png" Margin="0" Height="20" Width="20" />
                     </Button>
                 </StackPanel>

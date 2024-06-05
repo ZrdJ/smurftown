@@ -1,18 +1,22 @@
 ﻿using System.Windows.Input;
+using MvvmDialogs;
 using Smurftown.Backend.Entity;
 using Smurftown.Backend.Gateway;
+using Smurftown.UI.MVVM.View;
 
 namespace Smurftown.UI.MVVM.ViewModel
 {
     class AccountCardViewModel : Observable
     {
         private static readonly WindowsAccountGateway _windowsAccountGateway = WindowsAccountGateway.Instance;
+        private static readonly IDialogService _dialogService = new DialogService();
         private BattlenetAccount? _account;
 
         private string _imageSource;
 
 
         private RelayCommand _openBattlenetCommand;
+        private RelayCommand _openSettingsCommand;
         public AccountCardViewModel(BattlenetAccount account) => Account = account;
 
         public AccountCardViewModel()
@@ -66,6 +70,22 @@ namespace Smurftown.UI.MVVM.ViewModel
             }
         }
 
+        public ICommand OpenSettingsCommand
+        {
+            get
+            {
+                if (_openSettingsCommand == null)
+                {
+                    _openSettingsCommand = new RelayCommand(
+                        param => this.OpenSettings(),
+                        param => this.CanOpenSettings()
+                    );
+                }
+
+                return _openSettingsCommand;
+            }
+        }
+
         private bool CanOpenBattlenet()
         {
             return true;
@@ -74,6 +94,27 @@ namespace Smurftown.UI.MVVM.ViewModel
         private void OpenBattlenet()
         {
             _windowsAccountGateway.OpenBattlenet(_account);
+        }
+
+        private bool CanOpenSettings()
+        {
+            return true;
+        }
+
+        private void OpenSettings()
+        {
+            ShowDialog(viewModel => _dialogService.ShowDialog(this, viewModel));
+        }
+
+        private void ShowDialog(Func<AddOrEditAccountViewModel, bool?> showDialog)
+        {
+            var dialogViewModel = new AddOrEditAccountViewModel();
+
+            bool? success = showDialog(dialogViewModel);
+            if (success == true)
+            {
+                //Texts.Add(dialogViewModel.Text!);
+            }
         }
     }
 }
