@@ -33,6 +33,12 @@
                             <Setter Property="Background" Value="#174EA6" />
                             <!-- Even darker blue on press -->
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#003F7A" />
+                            <!-- Grey background when disabled -->
+                            <Setter Property="Foreground" Value="#8F8F92" />
+                            <!-- Grey text when disabled -->
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

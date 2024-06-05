@@ -1,28 +1,33 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using MvvmDialogs;
 
 namespace Smurftown.UI.MVVM.View;
 
-public partial class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
+public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
 {
     private bool? _dialogResult;
     private long? _discriminator;
     private string? _email;
+    private bool _hotsChecked;
     private string? _name;
-    private Visibility _saveButtonVisibility = Visibility.Hidden;
+    private bool _overwatchChecked;
+    private bool _saveButtonEnabled;
 
     public AddOrEditAccountViewModel()
     {
+        OverwatchChecked = false;
+        HotsChecked = false;
+        SaveButtonEnabled = false;
         OkCommand = new RelayCommand((ignore) => Ok());
     }
 
-    public Visibility SaveButtonVisibility
+    public bool SaveButtonEnabled
     {
-        get { return _saveButtonVisibility; }
+        get { return _saveButtonEnabled; }
         set
         {
-            _saveButtonVisibility = value;
+            if (value == _saveButtonEnabled) return;
+            _saveButtonEnabled = value;
             OnPropertyChanged();
         }
     }
@@ -32,6 +37,7 @@ public partial class AddOrEditAccountViewModel : Observable, IModalDialogViewMod
         get => _email;
         set
         {
+            if (value == _email) return;
             _email = value;
             OnPropertyChanged();
         }
@@ -44,6 +50,7 @@ public partial class AddOrEditAccountViewModel : Observable, IModalDialogViewMod
         get => _discriminator;
         set
         {
+            if (value == _discriminator) return;
             _discriminator = value;
             OnPropertyChanged();
         }
@@ -54,12 +61,35 @@ public partial class AddOrEditAccountViewModel : Observable, IModalDialogViewMod
         get => _name;
         set
         {
+            if (value == _name) return;
             _name = value;
             OnPropertyChanged();
         }
     }
 
     public ICommand OkCommand { get; }
+
+    public bool OverwatchChecked
+    {
+        get => _overwatchChecked;
+        set
+        {
+            if (value == _overwatchChecked) return;
+            _overwatchChecked = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool HotsChecked
+    {
+        get => _hotsChecked;
+        set
+        {
+            if (value == _hotsChecked) return;
+            _hotsChecked = value;
+            OnPropertyChanged();
+        }
+    }
 
     public bool? DialogResult
     {
@@ -69,6 +99,16 @@ public partial class AddOrEditAccountViewModel : Observable, IModalDialogViewMod
             _dialogResult = value;
             OnPropertyChanged();
         }
+    }
+
+    protected override void OnPropertyChanged(string? callerMemberName = null)
+    {
+        base.OnPropertyChanged(callerMemberName);
+        SaveButtonEnabled = !string.IsNullOrEmpty(Password)
+                            && !string.IsNullOrEmpty(_email)
+                            && !string.IsNullOrEmpty(_name)
+                            && _discriminator > 0
+                            && (_hotsChecked || _overwatchChecked);
     }
 
     private void Ok()

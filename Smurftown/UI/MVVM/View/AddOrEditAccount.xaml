@@ -117,11 +117,13 @@
             <TextBlock Text="SELECT GAMES" Foreground="#8F8F92" FontSize="14" FontWeight="Bold"
                        HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,5" />
             <StackPanel Orientation="Horizontal" Height="60">
-                <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Margin="20,0,0,0" Width="50">
+                <ToggleButton IsChecked="{Binding OverwatchChecked}" Style="{StaticResource BattlenetIconButtonTheme}"
+                              Margin="20,0,0,0" Width="50">
                     <Image Source="pack://application:,,,/UI/Images/overwatch.png"
                            RenderOptions.BitmapScalingMode="HighQuality" Height="35" Width="35" />
                 </ToggleButton>
-                <ToggleButton Style="{StaticResource BattlenetIconButtonTheme}" Margin="10,0,0,0" Width="50">
+                <ToggleButton IsChecked="{Binding HotsChecked}" Style="{StaticResource BattlenetIconButtonTheme}"
+                              Margin="10,0,0,0" Width="50">
                     <Image Source="pack://application:,,,/UI/Images/hots.png"
                            RenderOptions.BitmapScalingMode="HighQuality" Height="35" Width="35" />
                 </ToggleButton>
@@ -131,7 +133,7 @@
         <StackPanel Orientation="Horizontal" Margin="20,0,20,20">
             <Button Style="{StaticResource BattlenetButtonPrimaryTheme}" Content="Speichern" Width="120"
                     Height="30" Command="{Binding OkCommand}" IsDefault="True"
-                    Visibility="{Binding SaveButtonVisibility}" />
+                    IsEnabled="{Binding SaveButtonEnabled}" />
             <Button Style="{StaticResource BattlenetButtonSecondaryTheme}" Width="120" Content="Abbrechen"
                     Margin="10,0,0,0" IsCancel="True">
             </Button>

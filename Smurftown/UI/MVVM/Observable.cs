@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Smurftown.UI.MVVM
 {
@@ -12,9 +7,9 @@ namespace Smurftown.UI.MVVM
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string? callerMemberName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? callerMemberName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerMemberName));
         }
     }
- }
+}
