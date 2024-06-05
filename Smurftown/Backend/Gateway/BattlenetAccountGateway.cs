@@ -1,35 +1,36 @@
-﻿using Smurftown.Backend.Entity;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YamlDotNet.Serialization.NamingConventions;
-using YamlDotNet.Serialization;
+﻿using System.Collections.Immutable;
 using System.IO;
+using Smurftown.Backend.Entity;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace Smurftown.Backend.Gateway
 {
     public class BattlenetAccountGateway
     {
         public static readonly BattlenetAccountGateway Instance = new();
-        
+        private readonly SortedSet<BattlenetAccount> _battlenetAccounts;
+
         private readonly string _configDirectory = AppDomain.CurrentDomain.BaseDirectory;
         private readonly string _configFile;
-        private readonly List<BattlenetAccount> _battlenetAccounts;
-        private readonly ISerializer _yamlOut = new SerializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
-            .Build();
+
         private readonly IDeserializer _yamlIn = new DeserializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)
             .Build();
-        public IReadOnlyList<BattlenetAccount> BattlenetAccounts { get => _battlenetAccounts.AsReadOnly(); }
+
+        private readonly ISerializer _yamlOut = new SerializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .Build();
+
         private BattlenetAccountGateway()
         {
             _configFile = Path.Combine(_configDirectory, "data.yaml");
-            _battlenetAccounts = new List<BattlenetAccount>(ReadFromConfigFile());
+            _battlenetAccounts = new SortedSet<BattlenetAccount>(ReadFromConfigFile());
+        }
+
+        public IReadOnlyList<BattlenetAccount> BattlenetAccounts
+        {
+            get => _battlenetAccounts.ToImmutableSortedSet();
         }
 
         public void AddOrUpdate(BattlenetAccount account)
@@ -50,8 +51,9 @@ namespace Smurftown.Backend.Gateway
             ensureConfigFileExists();
             var content = File.ReadAllText(_configFile);
             var accountsFromList = _yamlIn.Deserialize<List<BattlenetAccount>>(new StringReader(content));
-            return accountsFromList ?? ([]);
+            return accountsFromList ?? ( []);
         }
+
         private void SaveToConfigFile()
         {
             ensureConfigFileExists();

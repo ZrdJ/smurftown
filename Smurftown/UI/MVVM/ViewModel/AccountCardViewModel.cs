@@ -108,13 +108,10 @@ namespace Smurftown.UI.MVVM.ViewModel
 
         private void ShowDialog(Func<AddOrEditAccountViewModel, bool?> showDialog)
         {
-            var dialogViewModel = new AddOrEditAccountViewModel();
+            var dialogViewModel = new AddOrEditAccountViewModel(_account!);
 
-            bool? success = showDialog(dialogViewModel);
-            if (success == true)
-            {
-                //Texts.Add(dialogViewModel.Text!);
-            }
+            var success = showDialog(dialogViewModel);
+            dialogViewModel.Execute(success);
         }
     }
 }

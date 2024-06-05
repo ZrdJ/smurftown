@@ -1,10 +1,15 @@
 ﻿namespace Smurftown.Backend.Entity
 {
-    public class WindowsUserAccount
+    public class WindowsUserAccount : IComparable<WindowsUserAccount>
     {
         public required string Name { get; set; }
         public required string Password { get; set; }
         public string? BattlenetEmail { get; set; }
+
+        public int CompareTo(WindowsUserAccount? other)
+        {
+            return other == null ? 1 : string.Compare(this.Name, other.Name, StringComparison.Ordinal);
+        }
 
         private bool Equals(WindowsUserAccount other)
         {

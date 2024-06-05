@@ -1,10 +1,15 @@
 ﻿using System.Windows.Input;
 using MvvmDialogs;
+using Smurftown.Backend.Entity;
+using Smurftown.Backend.Gateway;
 
 namespace Smurftown.UI.MVVM.View;
 
 public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
 {
+    private static readonly BattlenetAccountGateway _battlenetAccountGateway = BattlenetAccountGateway.Instance;
+    private static readonly WindowsAccountGateway _windowsAccountGateway = WindowsAccountGateway.Instance;
+
     private bool? _dialogResult;
     private long? _discriminator;
     private string? _email;
@@ -13,12 +18,17 @@ public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
     private bool _overwatchChecked;
     private bool _saveButtonEnabled;
 
-    public AddOrEditAccountViewModel()
+    public AddOrEditAccountViewModel(BattlenetAccount? account)
     {
-        OverwatchChecked = false;
-        HotsChecked = false;
-        SaveButtonEnabled = false;
+        OverwatchChecked = account?.Overwatch ?? false;
+        HotsChecked = account?.Hots ?? false;
+        Name = account?.Name ?? "";
+        Discrimnator = account != null ? long.Parse(account.Discriminator) : null;
+        Email = account?.Email ?? "";
+        Password = account?.Password ?? "";
         OkCommand = new RelayCommand((ignore) => Ok());
+        CancelCommand = new RelayCommand((ignore) => Cancel());
+        RefreshDialog();
     }
 
     public bool SaveButtonEnabled
@@ -43,7 +53,7 @@ public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
         }
     }
 
-    public string Password { private get; set; }
+    public string? Password { private get; set; }
 
     public long? Discrimnator
     {
@@ -68,6 +78,7 @@ public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
     }
 
     public ICommand OkCommand { get; }
+    public ICommand CancelCommand { get; }
 
     public bool OverwatchChecked
     {
@@ -101,9 +112,19 @@ public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
         }
     }
 
+    private void Cancel()
+    {
+        DialogResult = false;
+    }
+
     protected override void OnPropertyChanged(string? callerMemberName = null)
     {
         base.OnPropertyChanged(callerMemberName);
+        RefreshDialog();
+    }
+
+    private void RefreshDialog()
+    {
         SaveButtonEnabled = !string.IsNullOrEmpty(Password)
                             && !string.IsNullOrEmpty(_email)
                             && !string.IsNullOrEmpty(_name)
@@ -113,9 +134,27 @@ public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
 
     private void Ok()
     {
-        if (!string.IsNullOrEmpty(Name))
+        DialogResult = true;
+    }
+
+    public void Execute(bool? success)
+    {
+        if (!success.HasValue || !success.Value)
         {
-            DialogResult = true;
+            return;
         }
+
+        var account = new BattlenetAccount
+        {
+            Name = Name!,
+            Discriminator = Discrimnator!.ToString(),
+            Email = Email!,
+            Password = Password!,
+            Overwatch = OverwatchChecked,
+            Hots = HotsChecked
+        };
+
+        _battlenetAccountGateway.AddOrUpdate(account);
+        _windowsAccountGateway.Add(account);
     }
 }

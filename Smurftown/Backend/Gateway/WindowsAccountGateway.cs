@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Management;
 using System.Runtime.InteropServices;
 using Smurftown.Backend.Entity;
@@ -12,7 +13,7 @@ namespace Smurftown.Backend.Gateway
         private const uint UF_DONT_EXPIRE_PASSWD = 0x10000;
         public static readonly WindowsAccountGateway Instance = new();
 
-        private List<WindowsUserAccount> _windowsAccounts;
+        private SortedSet<WindowsUserAccount> _windowsAccounts;
 
         private WindowsAccountGateway()
         {
@@ -21,16 +22,27 @@ namespace Smurftown.Backend.Gateway
 
         public IReadOnlyList<WindowsUserAccount> WindowsAccounts
         {
-            get => _windowsAccounts.AsReadOnly();
+            get => _windowsAccounts.ToImmutableSortedSet();
         }
 
         [DllImport("Netapi32.dll", CharSet = CharSet.Unicode)]
         private static extern int NetUserAdd([MarshalAs(UnmanagedType.LPWStr)] string servername, uint level,
             ref USER_INFO_1 buf, out uint parm_err);
 
-        public void Add(WindowsUserAccount account)
+        public void Add(BattlenetAccount account)
         {
-            CreateWindowsAccount(account);
+            var windowsAccount = ToWindowsAccount(account);
+            var userCreated = CreateWindowsAccount(windowsAccount);
+            if (userCreated) Reload();
+        }
+
+        private WindowsUserAccount ToWindowsAccount(BattlenetAccount account)
+        {
+            return new WindowsUserAccount
+            {
+                Name = ToWindowsUser(account),
+                Password = ToWindowsUser(account)
+            };
         }
 
         private List<WindowsUserAccount> ReadWindowsAccounts()
@@ -44,7 +56,7 @@ namespace Smurftown.Backend.Gateway
                 }).ToList();
         }
 
-        private static void CreateWindowsAccount(WindowsUserAccount account)
+        private static bool CreateWindowsAccount(WindowsUserAccount account)
         {
             var userInfo = new USER_INFO_1
             {
@@ -60,6 +72,7 @@ namespace Smurftown.Backend.Gateway
             uint parm_err;
             var result = NetUserAdd(null, 1, ref userInfo, out parm_err);
             Console.WriteLine(result == 0 ? "User created successfully." : $"Error creating user: {result}");
+            return result == 0;
         }
 
         public void Reload()
@@ -76,7 +89,7 @@ namespace Smurftown.Backend.Gateway
         {
             const string programPath = @"C:\Program Files (x86)\Battle.net\Battle.net.exe";
             var username = ToWindowsUser(account);
-            var windowsUser = _windowsAccounts.Find(u => u.Name.Equals(username));
+            var windowsUser = _windowsAccounts.Single(u => u.Name.Equals(username));
             const string domain = ".";
 
             // Create a new process start info

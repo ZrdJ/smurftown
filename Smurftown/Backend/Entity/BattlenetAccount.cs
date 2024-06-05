@@ -1,21 +1,38 @@
 ﻿namespace Smurftown.Backend.Entity
 {
-    public class BattlenetAccount
+    public class BattlenetAccount : IComparable<BattlenetAccount>
     {
         private string _email;
         private string _name;
 
-        public required string Name { get => _name; set => _name = value.ToUpper(); }
+        public required string Name
+        {
+            get => _name;
+            set => _name = value.ToUpper();
+        }
+
         public required string Discriminator { get; set; }
-        public required string Email { get => _email; set => _email = value.ToLower(); }
+
+        public required string Email
+        {
+            get => _email;
+            set => _email = value.ToLower();
+        }
+
         public required string Password { get; set; }
         public required Boolean Overwatch { get; set; }
         public required Boolean Hots { get; set; }
+
+        public int CompareTo(BattlenetAccount? other)
+        {
+            return other == null ? 1 : string.Compare(this.Name, other.Name, StringComparison.Ordinal);
+        }
 
         public string Battletag()
         {
             return (Name + "#" + Discriminator).ToUpper();
         }
+
         private bool Equals(BattlenetAccount other)
         {
             return _email == other._email;
