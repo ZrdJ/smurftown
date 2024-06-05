@@ -12,7 +12,8 @@
         <Setter Property="Padding" Value="10" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="#32333a" />
         <!-- Rounded corners -->
         <Setter Property="Template">
             <Setter.Value>
@@ -26,12 +27,14 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#24252a" />
                             <!-- Darker blue on hover -->
+                            <Setter Property="BorderBrush" Value="#555555" />
+                            <!-- Lighter gray border on hover -->
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="#24252a" />
                             <!-- Even darker blue on press -->
+                            <Setter Property="BorderBrush" Value="#555555" />
+                            <!-- Lighter gray border on press -->
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

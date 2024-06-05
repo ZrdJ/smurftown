@@ -89,7 +89,7 @@ namespace Smurftown.Backend.Gateway
         {
             const string programPath = @"C:\Program Files (x86)\Battle.net\Battle.net.exe";
             var username = ToWindowsUser(account);
-            var windowsUser = _windowsAccounts.Single(u => u.Name.Equals(username));
+            var windowsUser = _windowsAccounts.FirstOrDefault(u => u.Name.Equals(username));
             const string domain = ".";
 
             // Create a new process start info
