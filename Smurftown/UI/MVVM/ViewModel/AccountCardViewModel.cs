@@ -11,7 +11,7 @@ namespace Smurftown.UI.MVVM.ViewModel
     class AccountCardViewModel : ObservableObject
     {
         private static readonly WindowsAccountGateway _windowsAccountGateway = WindowsAccountGateway.Instance;
-        private static readonly IDialogService _dialogService = new DialogService();
+        
         private BattlenetAccount? _account;
 
         private string _imageSource;
@@ -105,7 +105,7 @@ namespace Smurftown.UI.MVVM.ViewModel
 
         private void OpenSettings()
         {
-            ShowDialog(viewModel => _dialogService.ShowDialog(this, viewModel));
+            ShowDialog(viewModel => Dialogs.DialogService.ShowDialog(this, viewModel));
         }
 
         private void ShowDialog(Func<AddOrEditAccountViewModel, bool?> showDialog)

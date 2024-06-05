@@ -32,8 +32,8 @@ namespace Smurftown.Backend.Gateway
         public void Add(BattlenetAccount account)
         {
             var windowsAccount = ToWindowsAccount(account);
-            var userCreated = CreateWindowsAccount(windowsAccount);
-            if (userCreated) Reload();
+            CreateWindowsAccount(windowsAccount);
+            Reload();
         }
 
         private WindowsUserAccount ToWindowsAccount(BattlenetAccount account)
@@ -56,7 +56,7 @@ namespace Smurftown.Backend.Gateway
                 }).ToList();
         }
 
-        private static bool CreateWindowsAccount(WindowsUserAccount account)
+        private static void CreateWindowsAccount(WindowsUserAccount account)
         {
             var userInfo = new USER_INFO_1
             {
@@ -71,8 +71,11 @@ namespace Smurftown.Backend.Gateway
 
             uint parm_err;
             var result = NetUserAdd(null, 1, ref userInfo, out parm_err);
-            Console.WriteLine(result == 0 ? "User created successfully." : $"Error creating user: {result}");
-            return result == 0;
+            if (result != 0)
+            {
+                throw new InvalidOperationException("Unable to create Windows User for Battlenet Account. Maybe the user already exists. Otherwise please makre sure to start this application as a administrator.");
+            }
+            
         }
 
         public void Reload()

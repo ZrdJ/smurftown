@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Data;
@@ -31,6 +32,7 @@ namespace Smurftown.Backend.Gateway
                 BattlenetAccounts.Add(account);
             };
             BattlenetAccountsFiltered = CollectionViewSource.GetDefaultView(BattlenetAccounts);
+            BattlenetAccountsFiltered.SortDescriptions.Add(new SortDescription(nameof(BattlenetAccount.Name), ListSortDirection.Ascending));
         }
 
         public void FilterBy(bool overwatch, bool hots)
@@ -51,10 +53,10 @@ namespace Smurftown.Backend.Gateway
         }
        
 
-        public ObservableHashSet<BattlenetAccount> BattlenetAccounts
+        public ObservableCollection<BattlenetAccount> BattlenetAccounts
         {
             get; set;
-        } = new ObservableHashSet<BattlenetAccount>();
+        } = new ObservableCollection<BattlenetAccount>();
 
         public ICollectionView BattlenetAccountsFiltered
         {
@@ -63,6 +65,7 @@ namespace Smurftown.Backend.Gateway
 
         public void AddOrUpdate(BattlenetAccount account)
         {
+            BattlenetAccounts.Remove(account);
             BattlenetAccounts.Add(account);
             SaveToConfigFile();
         }
@@ -98,6 +101,7 @@ namespace Smurftown.Backend.Gateway
 
         public void Reload()
         {
+            BattlenetAccounts.Clear();
             foreach (var battlenetAccount in ReadFromConfigFile()) BattlenetAccounts.Add(battlenetAccount);
         }
     }
