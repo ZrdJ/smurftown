@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterOwner"
         BorderBrush="#313339"
         BorderThickness="1"
-        Title="AddOrEditAccount" Height="600" Width="750"
+        Title="AddOrEditAccount" Height="450" Width="750"
         d:DataContext="{d:DesignInstance {x:Type local:AddOrEditAccountViewModel}}">
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -23,9 +23,11 @@
    
 
     <StackPanel Orientation="Vertical">
-        <TextBlock Text="Account modifizieren" Foreground="White" FontSize="24" FontWeight="DemiBold"
-                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,20,0,0" />
-        <Separator Background="#313339" Margin="0,25" />
+        <Border Margin="0,0,0,0" Height="60" Background="#15171E">
+            <TextBlock Text="Create or modify account" Foreground="White" FontSize="24" FontWeight="DemiBold"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" />
+        </Border>
+        <Separator Background="#313339" Margin="0,0,0,20" />
         <StackPanel Orientation="Vertical">
             <TextBlock Text="BATTLETAG" Foreground="#8F8F92" FontSize="14" FontWeight="Bold"
                        HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" />
@@ -86,15 +88,19 @@
                 </ToggleButton>
             </StackPanel>
         </StackPanel>
-        <Separator Background="#313339" Margin="0,170,0,20" />
-        <StackPanel Orientation="Horizontal" Margin="20,0,20,20">
-            <Button Style="{StaticResource BattlenetButtonPrimaryTheme}" Content="Speichern" Width="120"
+        <Separator Background="#313339" Margin="0,60,0,0" />
+        
+        <Border Margin="0,0,0,0" Height="80" Background="#15171E" >
+            <StackPanel Orientation="Horizontal" Margin="20,10,20,20">
+                <Button Style="{StaticResource BattlenetButtonPrimaryTheme}" Content="Save" Width="120"
                     Height="30" Command="{Binding OkCommand}" IsDefault="True"
                     IsEnabled="{Binding SaveButtonEnabled}" />
-            <Button Command="{Binding CancelCommand}" Style="{StaticResource BattlenetButtonSecondaryTheme}"
-                    Width="120" Content="Abbrechen"
+                <Button Command="{Binding CancelCommand}" Style="{StaticResource BattlenetButtonSecondaryTheme}"
+                    Width="120" Content="Cancel" Height="30"
                     Margin="10,0,0,0" IsCancel="True">
-            </Button>
-        </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+       
     </StackPanel>
 </Window>
