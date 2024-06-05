@@ -1,24 +1,60 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using MvvmDialogs;
 
 namespace Smurftown.UI.MVVM.View;
 
-public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
+public partial class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
 {
-    private bool? dialogResult;
-    private string? text;
+    private bool? _dialogResult;
+    private long? _discriminator;
+    private string? _email;
+    private string? _name;
+    private Visibility _saveButtonVisibility = Visibility.Hidden;
 
     public AddOrEditAccountViewModel()
     {
         OkCommand = new RelayCommand((ignore) => Ok());
     }
 
-    public string? Text
+    public Visibility SaveButtonVisibility
     {
-        get => text;
+        get { return _saveButtonVisibility; }
         set
         {
-            text = value;
+            _saveButtonVisibility = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string? Email
+    {
+        get => _email;
+        set
+        {
+            _email = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string Password { private get; set; }
+
+    public long? Discrimnator
+    {
+        get => _discriminator;
+        set
+        {
+            _discriminator = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string? Name
+    {
+        get => _name;
+        set
+        {
+            _name = value;
             OnPropertyChanged();
         }
     }
@@ -27,17 +63,17 @@ public class AddOrEditAccountViewModel : Observable, IModalDialogViewModel
 
     public bool? DialogResult
     {
-        get => dialogResult;
+        get => _dialogResult;
         private set
         {
-            dialogResult = value;
+            _dialogResult = value;
             OnPropertyChanged();
         }
     }
 
     private void Ok()
     {
-        if (!string.IsNullOrEmpty(Text))
+        if (!string.IsNullOrEmpty(Name))
         {
             DialogResult = true;
         }

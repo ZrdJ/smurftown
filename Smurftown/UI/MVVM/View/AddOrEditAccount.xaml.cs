@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Smurftown.UI.MVVM.View;
@@ -10,11 +12,20 @@ public partial class AddOrEditAccount : Window
         InitializeComponent();
     }
 
-    private void DockPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void DiscriminatorValidationTextBox(object sender, TextCompositionEventArgs e)
     {
-        if (e.LeftButton == MouseButtonState.Pressed)
+        var regex = MyRegex();
+        e.Handled = regex.IsMatch(e.Text);
+    }
+
+    [GeneratedRegex("[^0-9]+")]
+    private static partial Regex MyRegex();
+
+    private void PasswordChanged(object sender, RoutedEventArgs e)
+    {
+        if (this.DataContext != null)
         {
-            this.DragMove();
+            ((dynamic)this.DataContext).Password = ((PasswordBox)sender).Password;
         }
     }
 }
