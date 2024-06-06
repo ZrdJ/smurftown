@@ -1,16 +1,21 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics;
+using System.IO;
 using System.Management;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using Smurftown.Backend.Entity;
 
 namespace Smurftown.Backend.Gateway
 {
     public class WindowsAccountGateway
     {
+        const int USER_PRIV_ADMIN = 2;
         private const uint USER_PRIV_USER = 1;
         private const uint UF_SCRIPT = 1;
         private const uint UF_DONT_EXPIRE_PASSWD = 0x10000;
+        const int UF_NORMAL_ACCOUNT = 0x0200;
         public static readonly WindowsAccountGateway Instance = new();
 
         private SortedSet<WindowsUserAccount> _windowsAccounts;
@@ -58,14 +63,16 @@ namespace Smurftown.Backend.Gateway
 
         private static void CreateWindowsAccount(WindowsUserAccount account)
         {
+            var homeDirectory = Path.Combine(@"C:\Users", account.Name);
+
             var userInfo = new USER_INFO_1
             {
                 usri1_name = account.Name,
                 usri1_password = account.Password,
-                usri1_priv = USER_PRIV_USER,
-                usri1_home_dir = null,
-                usri1_comment = "New user account",
-                usri1_flags = UF_SCRIPT | UF_DONT_EXPIRE_PASSWD,
+                usri1_priv = USER_PRIV_ADMIN,
+                usri1_home_dir = homeDirectory,
+                usri1_comment = "created by Smurftown",
+                usri1_flags = UF_SCRIPT | UF_NORMAL_ACCOUNT | UF_DONT_EXPIRE_PASSWD,
                 usri1_script_path = null
             };
 
@@ -73,9 +80,44 @@ namespace Smurftown.Backend.Gateway
             var result = NetUserAdd(null, 1, ref userInfo, out parm_err);
             if (result != 0)
             {
-                throw new InvalidOperationException("We were unable to create a windows user for this account.Please make sure to start this application as a administrator to avoid such errors.");
+                throw new InvalidOperationException(
+                    "We were unable to create a windows user for this account.Please make sure to start this application as a administrator to avoid such errors.");
             }
-            
+
+            // Create the home directory if it does not exist
+            if (!Directory.Exists(homeDirectory))
+            {
+                Directory.CreateDirectory(homeDirectory);
+            }
+
+            // Set the directory permissions to the new user
+            SetHomeDirectoryPermissions(account.Name, homeDirectory);
+        }
+
+        static void SetHomeDirectoryPermissions(string username, string homeDirectory)
+        {
+            try
+            {
+                var directoryInfo = new DirectoryInfo(homeDirectory);
+                var directorySecurity = directoryInfo.GetAccessControl();
+
+                // Add the user to the directory security
+                var userSid =
+                    new NTAccount(Environment.MachineName, username).Translate(typeof(SecurityIdentifier)) as
+                        SecurityIdentifier;
+                var accessRule = new FileSystemAccessRule(userSid,
+                    FileSystemRights.FullControl,
+                    InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
+                    PropagationFlags.None,
+                    AccessControlType.Allow);
+
+                directorySecurity.AddAccessRule(accessRule);
+                directoryInfo.SetAccessControl(directorySecurity);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentOutOfRangeException("Error setting home directory permissions: " + ex.Message);
+            }
         }
 
         public void Reload()
@@ -83,7 +125,7 @@ namespace Smurftown.Backend.Gateway
             _windowsAccounts = [..ReadWindowsAccounts()];
         }
 
-        private string ToWindowsUser(BattlenetAccount b)
+        private static string ToWindowsUser(BattlenetAccount b)
         {
             return (b.Name + "-" + b.Discriminator).ToLower();
         }
@@ -132,7 +174,7 @@ namespace Smurftown.Backend.Gateway
                 throw new ArgumentNullException(nameof(password));
 
             var securePassword = new System.Security.SecureString();
-            foreach (char c in password)
+            foreach (var c in password)
                 securePassword.AppendChar(c);
             securePassword.MakeReadOnly();
             return securePassword;
