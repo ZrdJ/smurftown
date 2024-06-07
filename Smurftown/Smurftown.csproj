@@ -26,6 +26,8 @@
   <ItemGroup>
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
       <PackageReference Include="MvvmDialogs" Version="9.1.2" />
+      <PackageReference Include="System.DirectoryServices" Version="9.0.0-preview.4.24266.19"/>
+      <PackageReference Include="System.DirectoryServices.AccountManagement" Version="9.0.0-preview.4.24266.19"/>
     <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="ToastNotifications" Version="2.5.1" />
     <PackageReference Include="ToastNotifications.Messages" Version="2.5.1" />

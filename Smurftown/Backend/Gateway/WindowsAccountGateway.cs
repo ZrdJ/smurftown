@@ -1,21 +1,13 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics;
-using System.IO;
+using System.DirectoryServices.AccountManagement;
 using System.Management;
-using System.Runtime.InteropServices;
-using System.Security.AccessControl;
-using System.Security.Principal;
 using Smurftown.Backend.Entity;
 
 namespace Smurftown.Backend.Gateway
 {
     public class WindowsAccountGateway
     {
-        const int USER_PRIV_ADMIN = 2;
-        private const uint USER_PRIV_USER = 1;
-        private const uint UF_SCRIPT = 1;
-        private const uint UF_DONT_EXPIRE_PASSWD = 0x10000;
-        const int UF_NORMAL_ACCOUNT = 0x0200;
         public static readonly WindowsAccountGateway Instance = new();
 
         private SortedSet<WindowsUserAccount> _windowsAccounts;
@@ -29,10 +21,6 @@ namespace Smurftown.Backend.Gateway
         {
             get => _windowsAccounts.ToImmutableSortedSet();
         }
-
-        [DllImport("Netapi32.dll", CharSet = CharSet.Unicode)]
-        private static extern int NetUserAdd([MarshalAs(UnmanagedType.LPWStr)] string servername, uint level,
-            ref USER_INFO_1 buf, out uint parm_err);
 
         public void Add(BattlenetAccount account)
         {
@@ -63,60 +51,14 @@ namespace Smurftown.Backend.Gateway
 
         private static void CreateWindowsAccount(WindowsUserAccount account)
         {
-            var homeDirectory = Path.Combine(@"C:\Users", account.Name);
-
-            var userInfo = new USER_INFO_1
+            using (var ctx = new PrincipalContext(ContextType.Machine))
             {
-                usri1_name = account.Name,
-                usri1_password = account.Password,
-                usri1_priv = USER_PRIV_ADMIN,
-                usri1_home_dir = homeDirectory,
-                usri1_comment = "created by Smurftown",
-                usri1_flags = UF_SCRIPT | UF_NORMAL_ACCOUNT | UF_DONT_EXPIRE_PASSWD,
-                usri1_script_path = null
-            };
-
-            uint parm_err;
-            var result = NetUserAdd(null, 1, ref userInfo, out parm_err);
-            if (result != 0)
-            {
-                throw new InvalidOperationException(
-                    "We were unable to create a windows user for this account.Please make sure to start this application as a administrator to avoid such errors.");
-            }
-
-            // Create the home directory if it does not exist
-            if (!Directory.Exists(homeDirectory))
-            {
-                Directory.CreateDirectory(homeDirectory);
-            }
-
-            // Set the directory permissions to the new user
-            SetHomeDirectoryPermissions(account.Name, homeDirectory);
-        }
-
-        static void SetHomeDirectoryPermissions(string username, string homeDirectory)
-        {
-            try
-            {
-                var directoryInfo = new DirectoryInfo(homeDirectory);
-                var directorySecurity = directoryInfo.GetAccessControl();
-
-                // Add the user to the directory security
-                var userSid =
-                    new NTAccount(Environment.MachineName, username).Translate(typeof(SecurityIdentifier)) as
-                        SecurityIdentifier;
-                var accessRule = new FileSystemAccessRule(userSid,
-                    FileSystemRights.FullControl,
-                    InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-                    PropagationFlags.None,
-                    AccessControlType.Allow);
-
-                directorySecurity.AddAccessRule(accessRule);
-                directoryInfo.SetAccessControl(directorySecurity);
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentOutOfRangeException("Error setting home directory permissions: " + ex.Message);
+                var user = new UserPrincipal(ctx);
+                user.SamAccountName = account.Name;
+                user.SetPassword(account.Name);
+                user.DisplayName = account.Name;
+                user.Description = "Created by Smurftown";
+                user.Save();
             }
         }
 
@@ -127,70 +69,48 @@ namespace Smurftown.Backend.Gateway
 
         private static string ToWindowsUser(BattlenetAccount b)
         {
-            return (b.Name + "-" + b.Discriminator).ToLower();
+            return (b.Name + b.Discriminator).ToLower();
         }
 
         public void OpenBattlenet(BattlenetAccount account)
         {
-            const string programPath = @"C:\Program Files (x86)\Battle.net\Battle.net.exe";
-            var username = ToWindowsUser(account);
-            var windowsUser = _windowsAccounts.FirstOrDefault(u => u.Name.Equals(username));
-            const string domain = ".";
+            var windowsUser = ToWindowsAccount(account);
+            var programPath = @"C:\Program Files (x86)\Battle.net\Battle.net.exe";
+
+            // Create the runas command
+            var command = $"psexec -accepteula -u {windowsUser.Name} -p {windowsUser.Name} \"{programPath}\"";
+            Console.WriteLine(command);
 
             // Create a new process start info
-            var startInfo = windowsUser == null
-                ? new ProcessStartInfo
-                {
-                    FileName = programPath,
-                    UseShellExecute = true, // Must be false to use UserName and Password
-                    LoadUserProfile = false // Optionally load the user profile
-                }
-                : new ProcessStartInfo
-                {
-                    FileName = programPath,
-                    UserName = username,
-                    Password = ConvertToSecureString(username),
-                    Domain = domain,
-                    UseShellExecute = false, // Must be false to use UserName and Password
-                    LoadUserProfile = false // Optionally load the user profile
-                };
-
-            try
+            var startInfo = new ProcessStartInfo
             {
-                // Start the process with the specified user credentials
-                using var process = Process.Start(startInfo);
-                Console.WriteLine("Process started successfully.");
-                //process?.WaitForExit(); // Optionally wait for the process to exit
-            }
-            catch (Exception ex)
+                FileName = "cmd.exe",
+                Arguments = $"/C {command}",
+                UseShellExecute = false,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+
+            // Start the process
+            using (var process = new Process())
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                process.StartInfo = startInfo;
+                process.Start();
+
+                // Optional: Read the output and error
+                var output = process.StandardOutput.ReadToEnd();
+                var error = process.StandardError.ReadToEnd();
+
+                // Optional: Display the output and error
+                Console.WriteLine("Output:");
+                Console.WriteLine(output);
+                Console.WriteLine("Error:");
+                Console.WriteLine(error);
+
+                process.WaitForExit();
             }
-        }
-
-        private static System.Security.SecureString ConvertToSecureString(string password)
-        {
-            if (password == null)
-                throw new ArgumentNullException(nameof(password));
-
-            var securePassword = new System.Security.SecureString();
-            foreach (var c in password)
-                securePassword.AppendChar(c);
-            securePassword.MakeReadOnly();
-            return securePassword;
-        }
-
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        struct USER_INFO_1
-        {
-            public string usri1_name;
-            public string usri1_password;
-            public uint usri1_password_age;
-            public uint usri1_priv;
-            public string usri1_home_dir;
-            public string usri1_comment;
-            public uint usri1_flags;
-            public string usri1_script_path;
         }
     }
 }

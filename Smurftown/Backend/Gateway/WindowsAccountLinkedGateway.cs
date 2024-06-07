@@ -5,17 +5,20 @@ namespace Smurftown.Backend.Gateway;
 public class WindowsAccountLinkedGateway
 {
     public static readonly WindowsAccountLinkedGateway Instance = new();
-    
-    private readonly WindowsAccountGateway _windowsAccountGateway = WindowsAccountGateway.Instance;
     private readonly BattlenetAccountGateway _battlenetAccountGateway = BattlenetAccountGateway.Instance;
 
-    private List<WindowsUserAccountLinked> _windowsUserAccountsLinked = [];
+    private readonly WindowsAccountGateway _windowsAccountGateway = WindowsAccountGateway.Instance;
 
-    public IReadOnlyList<WindowsUserAccountLinked> WindowsAccountsLinked { get => _windowsUserAccountsLinked.AsReadOnly(); }
+    private List<WindowsUserAccountLinked> _windowsUserAccountsLinked = [];
 
     private WindowsAccountLinkedGateway()
     {
         Reset();
+    }
+
+    public IReadOnlyList<WindowsUserAccountLinked> WindowsAccountsLinked
+    {
+        get => _windowsUserAccountsLinked.AsReadOnly();
     }
 
     private void Reset()
@@ -28,7 +31,8 @@ public class WindowsAccountLinkedGateway
         var battlenetAccountsByBattletag = battlenetAccounts.ToDictionary(ByBattletag);
         foreach (var windowsUserAccount in windowsAccounts)
         {
-            var battlenetAccount = battlenetAccountsByBattletag!.GetValueOrDefault(windowsUserAccount.Name.ToLower(), null);
+            var battlenetAccount =
+                battlenetAccountsByBattletag!.GetValueOrDefault(windowsUserAccount.Name.ToLower(), null);
             _windowsUserAccountsLinked.Add(new WindowsUserAccountLinked()
             {
                 BattlenetAccount = battlenetAccount,
@@ -39,9 +43,9 @@ public class WindowsAccountLinkedGateway
 
     private static string ByBattletag(BattlenetAccount b)
     {
-        return (b.Name + "-" + b.Discriminator).ToLower();
+        return (b.Name + b.Discriminator).ToLower();
     }
-    
+
     private static string ByBattletag(WindowsUserAccount b)
     {
         return b.Name.ToLower();
