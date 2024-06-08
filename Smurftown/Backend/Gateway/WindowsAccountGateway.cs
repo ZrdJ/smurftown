@@ -72,7 +72,7 @@ namespace Smurftown.Backend.Gateway
             return (b.Name + b.Discriminator).ToLower();
         }
 
-        public void OpenBattlenet(BattlenetAccount account)
+        public async Task OpenBattlenet(BattlenetAccount account)
         {
             var windowsUser = ToWindowsAccount(account);
             const string programPath = @"C:\Program Files (x86)\Battle.net\Battle.net.exe";
@@ -85,25 +85,39 @@ namespace Smurftown.Backend.Gateway
                 FileName = "cmd.exe",
                 Arguments = $"/C {command}",
                 UseShellExecute = false,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
+                RedirectStandardInput = false,
+                RedirectStandardOutput = false,
+                RedirectStandardError = false,
                 CreateNoWindow = true
             };
 
-            using var process = new Process();
-            process.StartInfo = startInfo;
-            process.Start();
+            using (var process = new Process())
+            {
+                process.StartInfo = startInfo;
+                Console.WriteLine("Starting process");
+                process.Start();
 
-            // Optional: Read the output and error
-            var output = process.StandardOutput.ReadToEnd();
-            var error = process.StandardError.ReadToEnd();
+                // Optional: Read the output and error
+                //var output = process.StandardOutput.ReadToEnd();
+                //var error = process.StandardError.ReadToEnd();
 
-            // Optional: Display the output and error
-            Console.WriteLine("Output:");
-            Console.WriteLine(output);
-            Console.WriteLine("Error:");
-            Console.WriteLine(error);
+                // Optional: Display the output and error
+                //Console.WriteLine("Output:");
+                //Console.WriteLine(output);
+                //Console.WriteLine("Error:");
+                //Console.WriteLine(error);
+                Console.WriteLine("Waiting for 500 ms");
+                await Task.Delay(500);
+
+                // Kill the process if it's still running
+                Console.WriteLine("Checking if process is finished: " + process.HasExited);
+                if (!process.HasExited)
+                {
+                    Console.WriteLine("Killing process..");
+                    process.Kill();
+                    Console.WriteLine("Killing process.. DONE!");
+                }
+            }
         }
     }
 }

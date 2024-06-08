@@ -187,9 +187,9 @@ namespace Smurftown.UI.MVVM.ViewModel
             return true;
         }
 
-        private void OpenBattlenet()
+        private async void OpenBattlenet()
         {
-            _windowsAccountGateway.OpenBattlenet(_account);
+            await Task.Run(() => _windowsAccountGateway.OpenBattlenet(_account));
         }
 
         private bool CanOpenSettings()
