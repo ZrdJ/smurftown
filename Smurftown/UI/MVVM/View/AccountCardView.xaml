@@ -8,54 +8,56 @@
              xmlns:viewModel="clr-namespace:Smurftown.UI.MVVM.ViewModel"
              xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
              md:DialogServiceViews.IsRegistered="True"
-             Width="280" Height="170" 
+             Width="280" Height="170"
              d:DesignHeight="170" d:DesignWidth="280"
              d:DataContext="{d:DesignInstance {x:Type viewModel:AccountCardViewModel}}">
 
     <Border Background="#25262a" CornerRadius="10" Padding="0" Margin="5">
         <Border.Effect>
-            <DropShadowEffect ShadowDepth="3" Opacity="0.2" BlurRadius="0.0"/>
+            <DropShadowEffect ShadowDepth="3" Opacity="0.2" BlurRadius="0.0" />
         </Border.Effect>
-        
+
         <DockPanel>
             <Border Background="#151d2d" DockPanel.Dock="Top" CornerRadius="10,10,0,0">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"
                             Height="40" Margin="0,0,0,0">
                     <Border Background="Transparent"
-   Margin="0" Width="40">
+                            Margin="0" Width="40">
                         <Image Source="pack://application:,,,/UI/Images/battlenet.png"
-RenderOptions.BitmapScalingMode="HighQuality" Height="25" Width="25" />
+                               RenderOptions.BitmapScalingMode="HighQuality" Height="25" Width="25" />
                     </Border>
                     <TextBlock Text="{Binding Account.Name, UpdateSourceTrigger=PropertyChanged}" Foreground="White"
-                               FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
-                    <TextBlock Text="#" Foreground="White" FontWeight="Light" HorizontalAlignment="Center"  VerticalAlignment="Center"
+                               FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Margin="0,0,0,0" />
+                    <TextBlock Text="#" Foreground="White" FontWeight="Light" HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
                                Margin="0,0,0,0" />
                     <TextBlock Text="{Binding Account.Discriminator}" Foreground="White" FontWeight="Light"
                                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                 </StackPanel>
-                
+
             </Border>
             <StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="60" Margin="10,0">
                     <Border Background="Transparent" Visibility="{Binding Overwatch}"
-                   Margin="0,5,0,0" Width="40">
+                            Margin="0,5,0,0" Width="40">
                         <Image Source="pack://application:,,,/UI/Images/overwatch.png"
-                RenderOptions.BitmapScalingMode="HighQuality" Height="30" Width="30" />
+                               RenderOptions.BitmapScalingMode="HighQuality" Height="30" Width="30" />
                     </Border>
                     <Border Background="Transparent" Visibility="{Binding Hots}"
-                   Margin="0,5,0,0" Width="40">
+                            Margin="0,5,0,0" Width="40">
                         <Image Source="pack://application:,,,/UI/Images/hots.png"
-                RenderOptions.BitmapScalingMode="HighQuality" Height="30" Width="30" />
+                               RenderOptions.BitmapScalingMode="HighQuality" Height="30" Width="30" />
                     </Border>
                     <Border Background="Transparent" Visibility="{Binding Wow}"
-   Margin="0,5,0,0" Width="40">
+                            Margin="0,5,0,0" Width="40">
                         <Image Source="pack://application:,,,/UI/Images/wow.png"
-RenderOptions.BitmapScalingMode="HighQuality" Height="30" Width="30" />
+                               RenderOptions.BitmapScalingMode="HighQuality" Height="30" Width="30" />
                     </Border>
                     <Border Background="Transparent" Visibility="{Binding Diablo}"
-   Margin="0,5 ,0,0" Width="40">
+                            Margin="0,5 ,0,0" Width="40">
                         <Image Source="pack://application:,,,/UI/Images/diablo4.png"
-RenderOptions.BitmapScalingMode="HighQuality" Height="30" Width="30" />
+                               RenderOptions.BitmapScalingMode="HighQuality" Height="30" Width="30" />
                     </Border>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Height="15">
@@ -63,22 +65,31 @@ RenderOptions.BitmapScalingMode="HighQuality" Height="30" Width="30" />
                 </StackPanel>
                 <Grid Height="40" Margin="10,0,10,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition />
+
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" HorizontalAlignment="Left" Style="{StaticResource BattlenetButtonPrimaryTheme}" Content="Start" Width="90"
+                    <Button Grid.Column="0" HorizontalAlignment="Left"
+                            Style="{StaticResource BattlenetButtonPrimaryTheme}" Content="Start" Width="90"
                             Height="30" Command="{Binding Path=OpenBattlenetCommand}" />
 
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button HorizontalAlignment="Right" Style="{StaticResource BattlenetButtonSecondaryTheme}" Width="40" Height="30"
-                        Margin="5,0,0,0" Command="{Binding Path=CopyPasswordCommand}">
-                        <Image Source="pack://application:,,,/UI/Images/copy.png" Margin="0" Height="20" Width="20" />
-                    </Button>
-                    <Button HorizontalAlignment="Right" Style="{StaticResource BattlenetButtonSecondaryTheme}" Width="40" Height="30"
-                            Margin="5,0,0,0" Command="{Binding Path=OpenSettingsCommand}">
-                        <Image Source="pack://application:,,,/UI/Images/settings.png" Margin="0" Height="20" Width="20" />
-                    </Button>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Width="140">
+                        <Button Style="{StaticResource BattlenetButtonSecondaryTheme}" Width="40" Height="30"
+                                Margin="5,0,0,0" Command="{Binding Path=CopyUsernameCommand}">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality"
+                                   Source="pack://application:,,,/UI/Images/user.png" Margin="0" Height="16" Width="16" />
+                        </Button>
+                        <Button Style="{StaticResource BattlenetButtonSecondaryTheme}" Width="40" Height="30"
+                                Margin="5,0,0,0" Command="{Binding Path=CopyPasswordCommand}">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality"
+                                   Source="pack://application:,,,/UI/Images/lock.png" Margin="0" Height="16" Width="16" />
+                        </Button>
+                        <Button Style="{StaticResource BattlenetButtonSecondaryTheme}" Width="40" Height="30"
+                                Margin="5,0,0,0" Command="{Binding Path=OpenSettingsCommand}">
+                            <Image RenderOptions.BitmapScalingMode="HighQuality"
+                                   Source="pack://application:,,,/UI/Images/settings.png" Margin="0" Height="16"
+                                   Width="16" />
+                        </Button>
                     </StackPanel>
                 </Grid>
             </StackPanel>

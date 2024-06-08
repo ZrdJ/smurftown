@@ -14,6 +14,7 @@ namespace Smurftown.UI.MVVM.ViewModel
 
         private BattlenetAccount? _account;
         private RelayCommand _copyPasswordCommand;
+        private RelayCommand _copyUsernameCommand;
         private Visibility _diablo;
         private Visibility _hots;
 
@@ -110,6 +111,22 @@ namespace Smurftown.UI.MVVM.ViewModel
             }
         }
 
+        public ICommand CopyUsernameCommand
+        {
+            get
+            {
+                if (_copyUsernameCommand == null)
+                {
+                    _copyUsernameCommand = new RelayCommand(
+                        this.CopyUsername,
+                        this.CanCopyUsername
+                    );
+                }
+
+                return _copyUsernameCommand;
+            }
+        }
+
         public ICommand OpenBattlenetCommand
         {
             get
@@ -150,6 +167,16 @@ namespace Smurftown.UI.MVVM.ViewModel
         private void CopyPassword()
         {
             Clipboard.SetText(_account?.Password);
+        }
+
+        private bool CanCopyUsername()
+        {
+            return true;
+        }
+
+        private void CopyUsername()
+        {
+            Clipboard.SetText(_account?.Email);
         }
 
         private bool CanOpenBattlenet()

@@ -48,6 +48,10 @@
     <None Remove="UI\Images\windows.png" />
     <Resource Include="UI\Images\windows.png" />
     <Resource Include="UI\Images\wow.png" />
+      <None Remove="UI\Images\lock.png"/>
+      <Resource Include="UI\Images\lock.png"/>
+      <None Remove="UI\Images\user.png"/>
+      <Resource Include="UI\Images\user.png"/>
   </ItemGroup>
 
     <ItemGroup>
