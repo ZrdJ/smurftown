@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using Smurftown.Backend.Entity;
 using Smurftown.Backend.Gateway;
 using Smurftown.UI.MVVM.View;
+using ToastNotifications.Messages;
 
 namespace Smurftown.UI.MVVM.ViewModel
 {
@@ -167,6 +168,7 @@ namespace Smurftown.UI.MVVM.ViewModel
         private void CopyPassword()
         {
             Clipboard.SetText(_account?.Password);
+            Dialogs.Toast.ShowInformation("Password copied to clipboard");
         }
 
         private bool CanCopyUsername()
@@ -177,6 +179,7 @@ namespace Smurftown.UI.MVVM.ViewModel
         private void CopyUsername()
         {
             Clipboard.SetText(_account?.Email);
+            Dialogs.Toast.ShowInformation("E-Mail copied to clipboard");
         }
 
         private bool CanOpenBattlenet()
