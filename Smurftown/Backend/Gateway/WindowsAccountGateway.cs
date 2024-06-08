@@ -75,13 +75,11 @@ namespace Smurftown.Backend.Gateway
         public void OpenBattlenet(BattlenetAccount account)
         {
             var windowsUser = ToWindowsAccount(account);
-            var programPath = @"C:\Program Files (x86)\Battle.net\Battle.net.exe";
-
-            // Create the runas command
-            var command = $"psexec -accepteula -u {windowsUser.Name} -p {windowsUser.Name} \"{programPath}\"";
+            const string programPath = @"C:\Program Files (x86)\Battle.net\Battle.net.exe";
+            var command = account.DedicatedWindowsUser
+                ? $"psexec -accepteula -u {windowsUser.Name} -p {windowsUser.Name} \"{programPath}\""
+                : $"\"{programPath}\"";
             Console.WriteLine(command);
-
-            // Create a new process start info
             var startInfo = new ProcessStartInfo
             {
                 FileName = "cmd.exe",
@@ -93,24 +91,19 @@ namespace Smurftown.Backend.Gateway
                 CreateNoWindow = true
             };
 
-            // Start the process
-            using (var process = new Process())
-            {
-                process.StartInfo = startInfo;
-                process.Start();
+            using var process = new Process();
+            process.StartInfo = startInfo;
+            process.Start();
 
-                // Optional: Read the output and error
-                var output = process.StandardOutput.ReadToEnd();
-                var error = process.StandardError.ReadToEnd();
+            // Optional: Read the output and error
+            var output = process.StandardOutput.ReadToEnd();
+            var error = process.StandardError.ReadToEnd();
 
-                // Optional: Display the output and error
-                Console.WriteLine("Output:");
-                Console.WriteLine(output);
-                Console.WriteLine("Error:");
-                Console.WriteLine(error);
-
-                process.WaitForExit();
-            }
+            // Optional: Display the output and error
+            Console.WriteLine("Output:");
+            Console.WriteLine(output);
+            Console.WriteLine("Error:");
+            Console.WriteLine(error);
         }
     }
 }

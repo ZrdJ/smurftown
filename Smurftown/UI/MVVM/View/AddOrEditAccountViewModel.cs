@@ -26,6 +26,7 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
 
     public AddOrEditAccountViewModel(BattlenetAccount? account)
     {
+        DedicatedWindowsUserChecked = account?.DedicatedWindowsUser ?? false;
         OverwatchChecked = account?.Overwatch ?? false;
         HotsChecked = account?.Hots ?? false;
         WowChecked = account?.Wow ?? false;
@@ -199,6 +200,6 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
         };
 
         _battlenetAccountGateway.AddOrUpdate(account);
-        _windowsAccountGateway.Add(account);
+        if (account.DedicatedWindowsUser) _windowsAccountGateway.Add(account);
     }
 }

@@ -101,7 +101,7 @@
                         Margin="10,0,0,0" IsCancel="True">
                 </Button>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="300,0,0,0">
-                    <CheckBox Margin="0,15,0,0">
+                    <CheckBox IsChecked="{Binding DedicatedWindowsUserChecked}" Margin="0,15,0,0">
                         <TextBlock Text="dedicated windows user" Foreground="#8F8F92" FontSize="12"
                                    FontWeight="DemiBold" Margin="0,0,0,0">
                             <TextBlock.ToolTip>

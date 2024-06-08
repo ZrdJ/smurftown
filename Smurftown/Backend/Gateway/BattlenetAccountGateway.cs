@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Data;
@@ -17,7 +16,7 @@ namespace Smurftown.Backend.Gateway
         private readonly string _configFile;
 
         private readonly IDeserializer _yamlIn = new DeserializerBuilder()
-            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
 
         private readonly ISerializer _yamlOut = new SerializerBuilder()
@@ -30,10 +29,19 @@ namespace Smurftown.Backend.Gateway
             foreach (var account in ReadFromConfigFile())
             {
                 BattlenetAccounts.Add(account);
-            };
+            }
+
+            ;
             BattlenetAccountsFiltered = CollectionViewSource.GetDefaultView(BattlenetAccounts);
-            BattlenetAccountsFiltered.SortDescriptions.Add(new SortDescription(nameof(BattlenetAccount.Name), ListSortDirection.Ascending));
+            BattlenetAccountsFiltered.SortDescriptions.Add(new SortDescription(nameof(BattlenetAccount.Name),
+                ListSortDirection.Ascending));
         }
+
+
+        public ObservableCollection<BattlenetAccount> BattlenetAccounts { get; set; } =
+            new ObservableCollection<BattlenetAccount>();
+
+        public ICollectionView BattlenetAccountsFiltered { get; set; }
 
         public static Predicate<T> Or<T>(Predicate<T> p1, Predicate<T> p2)
         {
@@ -57,22 +65,11 @@ namespace Smurftown.Backend.Gateway
             {
                 if (obj is BattlenetAccount account)
                 {
-                    
                     return filter(account);
                 }
+
                 return false;
             };
-        }
-       
-
-        public ObservableCollection<BattlenetAccount> BattlenetAccounts
-        {
-            get; set;
-        } = new ObservableCollection<BattlenetAccount>();
-
-        public ICollectionView BattlenetAccountsFiltered
-        {
-            get; set;
         }
 
         public void AddOrUpdate(BattlenetAccount account)
