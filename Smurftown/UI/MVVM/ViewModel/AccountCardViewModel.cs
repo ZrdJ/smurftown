@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MvvmDialogs;
 using Smurftown.Backend.Entity;
 using Smurftown.Backend.Gateway;
 using Smurftown.UI.MVVM.View;
@@ -12,15 +11,21 @@ namespace Smurftown.UI.MVVM.ViewModel
     class AccountCardViewModel : ObservableObject
     {
         private static readonly WindowsAccountGateway _windowsAccountGateway = WindowsAccountGateway.Instance;
-        
+
         private BattlenetAccount? _account;
+        private RelayCommand _copyPasswordCommand;
+        private Visibility _diablo;
+        private Visibility _hots;
 
         private string _imageSource;
 
 
         private RelayCommand _openBattlenetCommand;
         private RelayCommand _openSettingsCommand;
-        private RelayCommand _copyPasswordCommand;
+
+        private Visibility _overwatch;
+        private Visibility _wow;
+
         public AccountCardViewModel(BattlenetAccount account)
         {
             Account = account;
@@ -34,15 +39,10 @@ namespace Smurftown.UI.MVVM.ViewModel
         {
         }
 
-        private Visibility _overwatch;
-        private Visibility _hots;
-        private Visibility _diablo;
-        private Visibility _wow;
-
         public Visibility Overwatch
         {
             get { return _overwatch; }
-            set { SetProperty(ref _overwatch , value); }
+            set { SetProperty(ref _overwatch, value); }
         }
 
         public Visibility Hots
@@ -110,16 +110,6 @@ namespace Smurftown.UI.MVVM.ViewModel
             }
         }
 
-        private bool CanCopyPassword()
-        {
-            return true;
-        }
-
-        private void CopyPassword()
-        {
-            Clipboard.SetText(_account?.Password);
-        }
-
         public ICommand OpenBattlenetCommand
         {
             get
@@ -152,6 +142,16 @@ namespace Smurftown.UI.MVVM.ViewModel
             }
         }
 
+        private bool CanCopyPassword()
+        {
+            return true;
+        }
+
+        private void CopyPassword()
+        {
+            Clipboard.SetText(_account?.Password);
+        }
+
         private bool CanOpenBattlenet()
         {
             return true;
@@ -174,9 +174,11 @@ namespace Smurftown.UI.MVVM.ViewModel
 
         private void ShowDialog(Func<AddOrEditAccountViewModel, bool?> showDialog)
         {
+            Application.Current.MainWindow!.Opacity = 0.4;
             var dialogViewModel = new AddOrEditAccountViewModel(_account!);
 
             var success = showDialog(dialogViewModel);
+            Application.Current.MainWindow!.Opacity = 100;
             dialogViewModel.Execute(success);
         }
     }

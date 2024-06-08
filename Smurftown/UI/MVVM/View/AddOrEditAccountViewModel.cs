@@ -12,16 +12,17 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
 {
     private static readonly BattlenetAccountGateway _battlenetAccountGateway = BattlenetAccountGateway.Instance;
     private static readonly WindowsAccountGateway _windowsAccountGateway = WindowsAccountGateway.Instance;
+    private bool _dedicatedWindowsUserChecked;
+    private bool _diabloChecked;
 
     private bool? _dialogResult;
     private long? _discriminator;
     private string? _email;
+    private bool _hotsChecked;
     private string? _name;
     private bool _overwatchChecked;
-    private bool _hotsChecked;
-    private bool _wowChecked;
-    private bool _diabloChecked;
     private bool _saveButtonEnabled;
+    private bool _wowChecked;
 
     public AddOrEditAccountViewModel(BattlenetAccount? account)
     {
@@ -94,6 +95,17 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
         {
             if (value == _overwatchChecked) return;
             _overwatchChecked = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool DedicatedWindowsUserChecked
+    {
+        get => _dedicatedWindowsUserChecked;
+        set
+        {
+            if (value == _dedicatedWindowsUserChecked) return;
+            _dedicatedWindowsUserChecked = value;
             OnPropertyChanged();
         }
     }
@@ -180,6 +192,7 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
             Email = Email!,
             Password = Password!,
             Overwatch = OverwatchChecked,
+            DedicatedWindowsUser = DedicatedWindowsUserChecked,
             Hots = HotsChecked,
             Wow = WowChecked,
             Diablo = DiabloChecked
