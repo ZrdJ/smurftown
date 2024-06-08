@@ -48,24 +48,33 @@ namespace Smurftown.Backend.Gateway
             return x => p1(x) || p2(x);
         }
 
-        public void FilterBy(bool overwatch, bool hots, bool diablo, bool wow)
+        public Predicate<BattlenetAccount> CreatePredicate(string searchQuery, bool overwatch, bool hots, bool diablo,
+            bool wow)
         {
-            Predicate<BattlenetAccount> filter = (b) =>
-                (overwatch && b.Overwatch) ||
-                (hots && b.Hots) ||
-                (diablo && b.Diablo) ||
-                (wow && b.Wow);
+            return item =>
+                (string.IsNullOrEmpty(searchQuery) || Contains(item, searchQuery)) &&
+                (!overwatch || item.Overwatch) &&
+                (!hots || item.Hots) &&
+                (!diablo || item.Diablo) &&
+                (!wow || item.Wow) ||
+                (string.IsNullOrEmpty(searchQuery) && !overwatch && !hots && !diablo && !wow);
+        }
 
-            if (!overwatch && !hots && !diablo && !wow)
-            {
-                filter = (b) => true;
-            }
+        private bool Contains(BattlenetAccount account, string searchQuery)
+        {
+            var parts = new List<string> { account.Name, account.Discriminator, account.Email };
+            return searchQuery.Split(" ")
+                .All(word => parts.Any(part => part.Contains(word, StringComparison.OrdinalIgnoreCase)));
+        }
 
+        public void FilterBy(string searchQuery, bool overwatch, bool hots, bool diablo, bool wow)
+        {
+            var filter = CreatePredicate(searchQuery, overwatch, hots, diablo, wow);
             BattlenetAccountsFiltered.Filter = (obj) =>
             {
                 if (obj is BattlenetAccount account)
                 {
-                    return filter(account);
+                    return filter?.Invoke(account) ?? true;
                 }
 
                 return false;

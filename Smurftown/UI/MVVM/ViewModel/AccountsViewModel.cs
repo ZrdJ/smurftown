@@ -1,12 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.ComponentModel;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Smurftown.Backend;
-using Smurftown.Backend.Entity;
 using Smurftown.Backend.Gateway;
 using Smurftown.UI.MVVM.View;
-using System.ComponentModel;
-using System.Security.Principal;
-using System.Windows.Input;
 
 namespace Smurftown.UI.MVVM.ViewModel
 {
@@ -14,11 +11,12 @@ namespace Smurftown.UI.MVVM.ViewModel
     {
         private static readonly BattlenetAccountGateway _battlenetAccountGateway = BattlenetAccountGateway.Instance;
         private ICollectionView _battlenetAccounts;
-        private bool _overwatchFiltered;
-        private bool _hotsFiltered;
-        private bool _wowFiltered;
-        private bool _diabloFiltered;
         private RelayCommand _createAccountCommand;
+        private bool _diabloFiltered;
+        private bool _hotsFiltered;
+        private bool _overwatchFiltered;
+        private string _searchQuery;
+        private bool _wowFiltered;
 
         public AccountsViewModel()
         {
@@ -42,6 +40,42 @@ namespace Smurftown.UI.MVVM.ViewModel
             }
         }
 
+        public bool OverwatchFiltered
+        {
+            get => _overwatchFiltered;
+            set => SetProperty(ref _overwatchFiltered, value);
+        }
+
+        public bool HotsFiltered
+        {
+            get => _hotsFiltered;
+            set => SetProperty(ref _hotsFiltered, value);
+        }
+
+        public bool DiabloFiltered
+        {
+            get => _diabloFiltered;
+            set => SetProperty(ref _diabloFiltered, value);
+        }
+
+        public bool WowFiltered
+        {
+            get => _wowFiltered;
+            set => SetProperty(ref _wowFiltered, value);
+        }
+
+        public string SearchQuery
+        {
+            get => _searchQuery;
+            set => SetProperty(ref _searchQuery, value);
+        }
+
+        public ICollectionView BattlenetAccounts
+        {
+            get { return _battlenetAccounts; }
+            set => SetProperty(ref _battlenetAccounts, value);
+        }
+
         private bool CanCreateAccount()
         {
             return true;
@@ -60,24 +94,12 @@ namespace Smurftown.UI.MVVM.ViewModel
             dialogViewModel.Execute(success);
         }
 
-        public bool OverwatchFiltered { get => _overwatchFiltered; set => SetProperty(ref _overwatchFiltered, value); }
-
-        public bool HotsFiltered { get => _hotsFiltered; set => SetProperty(ref _hotsFiltered, value); }
-
-        public bool DiabloFiltered { get => _diabloFiltered; set => SetProperty(ref _diabloFiltered, value); }
-
-        public bool WowFiltered { get => _wowFiltered; set => SetProperty(ref _wowFiltered, value); }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
-            _battlenetAccountGateway.FilterBy(OverwatchFiltered, HotsFiltered, DiabloFiltered, WowFiltered);
-        }
-
-        public ICollectionView BattlenetAccounts
-        {
-            get { return _battlenetAccounts; }
-            set => SetProperty(ref _battlenetAccounts, value);
+            _battlenetAccountGateway.FilterBy(SearchQuery, OverwatchFiltered, HotsFiltered, DiabloFiltered,
+                WowFiltered);
         }
     }
 }
