@@ -48,7 +48,7 @@ namespace Smurftown.Backend.Gateway
             return x => p1(x) || p2(x);
         }
 
-        public Predicate<BattlenetAccount> CreatePredicate(string searchQuery, bool overwatch, bool hots, bool diablo,
+        private Predicate<BattlenetAccount> CreatePredicate(string searchQuery, bool overwatch, bool hots, bool diablo,
             bool wow)
         {
             return item =>
