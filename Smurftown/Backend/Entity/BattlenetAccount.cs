@@ -26,6 +26,7 @@
         public required bool Diablo { get; set; }
 
         public required bool DedicatedWindowsUser { get; set; }
+        public required DateTime LatestInteractionAt { get; set; }
 
         public int CompareTo(BattlenetAccount? other)
         {

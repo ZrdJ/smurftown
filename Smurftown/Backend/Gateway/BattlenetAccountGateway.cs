@@ -31,8 +31,9 @@ namespace Smurftown.Backend.Gateway
                 BattlenetAccounts.Add(account);
             }
 
-            ;
             BattlenetAccountsFiltered = CollectionViewSource.GetDefaultView(BattlenetAccounts);
+            BattlenetAccountsFiltered.SortDescriptions.Add(
+                new SortDescription(nameof(BattlenetAccount.LatestInteractionAt), ListSortDirection.Descending));
             BattlenetAccountsFiltered.SortDescriptions.Add(new SortDescription(nameof(BattlenetAccount.Name),
                 ListSortDirection.Ascending));
         }
@@ -121,6 +122,12 @@ namespace Smurftown.Backend.Gateway
         {
             BattlenetAccounts.Clear();
             foreach (var battlenetAccount in ReadFromConfigFile()) BattlenetAccounts.Add(battlenetAccount);
+        }
+
+        public void UpdateInteraction(BattlenetAccount account)
+        {
+            account.LatestInteractionAt = DateTime.Now;
+            AddOrUpdate(account);
         }
     }
 }

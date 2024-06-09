@@ -196,7 +196,8 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
             DedicatedWindowsUser = DedicatedWindowsUserChecked,
             Hots = HotsChecked,
             Wow = WowChecked,
-            Diablo = DiabloChecked
+            Diablo = DiabloChecked,
+            LatestInteractionAt = DateTime.Now
         };
 
         _battlenetAccountGateway.AddOrUpdate(account);

@@ -12,6 +12,7 @@ namespace Smurftown.UI.MVVM.ViewModel
     class AccountCardViewModel : ObservableObject
     {
         private static readonly WindowsAccountGateway _windowsAccountGateway = WindowsAccountGateway.Instance;
+        private static readonly BattlenetAccountGateway _battlenetAccountGateway = BattlenetAccountGateway.Instance;
 
         private BattlenetAccount? _account;
         private RelayCommand _copyPasswordCommand;
@@ -167,7 +168,8 @@ namespace Smurftown.UI.MVVM.ViewModel
 
         private void CopyPassword()
         {
-            Clipboard.SetText(_account?.Password);
+            Clipboard.SetText(_account?.Password ?? "");
+            _battlenetAccountGateway.UpdateInteraction(_account!);
             Dialogs.Toast.ShowInformation("Password copied to clipboard");
         }
 
@@ -178,7 +180,8 @@ namespace Smurftown.UI.MVVM.ViewModel
 
         private void CopyUsername()
         {
-            Clipboard.SetText(_account?.Email);
+            Clipboard.SetText(_account?.Email ?? "");
+            _battlenetAccountGateway.UpdateInteraction(_account!);
             Dialogs.Toast.ShowInformation("E-Mail copied to clipboard");
         }
 
@@ -189,7 +192,8 @@ namespace Smurftown.UI.MVVM.ViewModel
 
         private async void OpenBattlenet()
         {
-            await Task.Run(() => _windowsAccountGateway.OpenBattlenet(_account));
+            await Task.Run(() => _windowsAccountGateway.OpenBattlenet(_account!));
+            _battlenetAccountGateway.UpdateInteraction(_account!);
         }
 
         private bool CanOpenSettings()
