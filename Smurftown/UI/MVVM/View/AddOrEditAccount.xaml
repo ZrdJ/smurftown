@@ -80,12 +80,12 @@
                 <ToggleButton IsChecked="{Binding WowChecked}" Style="{StaticResource BattlenetIconButtonTheme}"
                               Margin="10,0,0,0" Width="50">
                     <Image Source="pack://application:,,,/UI/Images/wow.png"
-                           RenderOptions.BitmapScalingMode="HighQuality" Height="35" Width="35" />
+                           RenderOptions.BitmapScalingMode="HighQuality" Height="40" Width="40" />
                 </ToggleButton>
                 <ToggleButton IsChecked="{Binding DiabloChecked}" Style="{StaticResource BattlenetIconButtonTheme}"
                               Margin="10,0,0,0" Width="50">
                     <Image Source="pack://application:,,,/UI/Images/diablo4.png"
-                           RenderOptions.BitmapScalingMode="HighQuality" Height="35" Width="35" />
+                           RenderOptions.BitmapScalingMode="HighQuality" Height="40" Width="40" />
                 </ToggleButton>
             </StackPanel>
         </StackPanel>
