@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -88,9 +89,11 @@ namespace Smurftown.UI.MVVM.ViewModel
 
         private void ShowDialog(Func<AddOrEditAccountViewModel, bool?> showDialog)
         {
+            Application.Current.MainWindow!.Opacity = 0.4;
             var dialogViewModel = new AddOrEditAccountViewModel(null);
 
             var success = showDialog(dialogViewModel);
+            Application.Current.MainWindow!.Opacity = 100;
             dialogViewModel.Execute(success);
         }
 
