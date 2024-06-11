@@ -121,7 +121,7 @@
                         Background="Transparent" Margin="10,0,0,0">
                 <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Accounts" GroupName="Menu"
                              IsChecked="True" Command="{Binding AccountsViewCommand}" Margin="10" />
-                <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Benutzer" GroupName="Menu"
+                <RadioButton Style="{StaticResource BattlenetRadioButtonTheme}" Content="Users" GroupName="Menu"
                              Command="{Binding UsersViewCommand}" Margin="10" />
             </StackPanel>
 

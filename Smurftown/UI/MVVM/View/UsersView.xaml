@@ -1,39 +1,35 @@
 ﻿<UserControl x:Class="Smurftown.UI.MVVM.View.UsersView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Smurftown.UI.MVVM.View"
-              xmlns:viewModel="clr-namespace:Smurftown.UI.MVVM.ViewModel"
-             mc:Ignorable="d" 
+             xmlns:viewModel="clr-namespace:Smurftown.UI.MVVM.ViewModel"
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
-                      Background="Transparent">
+             Background="Transparent">
     <UserControl.DataContext>
-        <viewModel:UsersViewModel/>
+        <viewModel:UsersViewModel />
     </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
-            <RowDefinition/>
+            <RowDefinition Height="80" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Height="60" VerticalAlignment="Top" Background="#24262e" Margin="20,10,20,10">
-            <TextBlock Foreground="Gray" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"  Margin="20,0,0,0">FILTER</TextBlock>
-
-            <ToggleButton HorizontalAlignment="Right" Style="{StaticResource BattlenetIconButtonTheme}" Margin="0" Width="60">
-                <Image Source="pack://application:,,,/UI/Images/add.png" Height="35" Width="35" />
-            </ToggleButton>
+            <TextBlock Foreground="Gray" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Margin="20,0,0,0"></TextBlock>
         </DockPanel>
-        
-        <ItemsControl  Grid.Row="1"  ItemsSource="{Binding WindowsAccountLinked, UpdateSourceTrigger=PropertyChanged}">
-                
+
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding WindowsAccountLinked, UpdateSourceTrigger=PropertyChanged}">
+
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                 
-                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
-                   
+
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+
                 </ItemsPanelTemplate>
 
             </ItemsControl.ItemsPanel>
@@ -48,7 +44,8 @@
             </ItemsControl.ItemTemplate>
             <ItemsControl.Template>
                 <ControlTemplate TargetType="{x:Type ItemsControl}">
-                    <ScrollViewer Style="{StaticResource BattlenetScrollViewerTheme}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer Style="{StaticResource BattlenetScrollViewerTheme}"
+                                  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                         <ItemsPresenter />
                     </ScrollViewer>
                 </ControlTemplate>
