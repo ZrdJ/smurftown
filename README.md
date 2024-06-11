@@ -32,6 +32,12 @@ To be able to windows account features to its full extend, simply configure the 
 * add capability to manage rank information
 
 # FAQ
+### Where can i download the app ?
+Select the latest release on the right side of this project and download the .exe Installer: https://github.com/ZrdJ/smurftown/releases/tag/2024.6.0
+
+### Why do i need to start this app as an adminsitrator?
+Thats because this app is creating windows users on your behalf when you decide to run multiple Battlenet instance at the same time
+
 ### Is this app sending or receiving data from a server on the internet?
 No, this app operates only locally and does not communicate with anything online
 
@@ -40,3 +46,5 @@ Your data is stored in a single file called `data.yaml` and can be found in your
 
 ### How can I be sure you are not lying?
 You can't. Lookup the source code yourself and decide on your own.
+
+
