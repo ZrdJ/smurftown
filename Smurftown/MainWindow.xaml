@@ -114,7 +114,7 @@
         </DockPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Image HorizontalAlignment="Left" Source="pack://application:,,,/UI/Images/battlenet.png"
+            <Image HorizontalAlignment="Left" Source="pack://application:,,,/UI/Images/smurftown.png"
                    RenderOptions.BitmapScalingMode="HighQuality" Height="50" Width="50" Margin="20,0,0,0" />
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"

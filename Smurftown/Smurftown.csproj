@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>UI\Images\battlenet.ico</ApplicationIcon>
+      <ApplicationIcon>UI\Images\smurftown.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -52,6 +52,10 @@
       <Resource Include="UI\Images\lock.png"/>
       <None Remove="UI\Images\user.png"/>
       <Resource Include="UI\Images\user.png"/>
+      <None Remove="UI\Images\smurftown.png"/>
+      <Resource Include="UI\Images\smurftown.png"/>
+      <None Remove="UI\Images\smurftown.ico"/>
+      <Resource Include="UI\Images\smurftown.ico"/>
   </ItemGroup>
 
     <ItemGroup>
