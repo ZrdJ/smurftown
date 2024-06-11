@@ -10,7 +10,7 @@
 #include "CodeDependencies.iss"
 
 [Setup]
-#define MyAppSetupName 'Smurftown Setup'
+#define MyAppSetupName 'Smurftown'
 #define MyAppVersion '2024.6.0'
 #define MyAppPublisher 'ZrdJ'
 #define MyAppCopyright 'Copyright © ZrdJ'
@@ -45,8 +45,8 @@ Name: de; MessagesFile: "compiler:Languages\German.isl"
 Name: es; MessagesFile: "compiler:Languages\Spanish.isl"
 
 [Files]
-Source: "executables\win-x64\Smurftown.exe"; DestDir: "{app}"; DestName: "Smurftown.exe"; Check: Dependency_IsX64; Flags: ignoreversion
-Source: "executables\win-x86\Smurftown.exe"; DestDir: "{app}"; Check: not Dependency_IsX64; Flags: ignoreversion
+Source: "executables\win-x64\publish\Smurftown.exe"; DestDir: "{app}"; DestName: "Smurftown.exe"; Check: Dependency_IsX64; Flags: ignoreversion
+Source: "executables\win-x86\publish\Smurftown.exe"; DestDir: "{app}"; Check: not Dependency_IsX64; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppSetupName}"; Filename: "{app}\Smurftown.exe"
