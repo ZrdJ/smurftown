@@ -3,7 +3,7 @@
 Manage all of your battlenet account in one place.
 
 > [!WARNING]
-> This app will needs admin priviliges to make windows user handling function. If you want the app to launch your Battlenet with other windows users, please make sure to run this app as an administrator
+> This app needs admin priviliges to function properly. If you want the app to launch your Battlenet with other windows users, please make sure to run this app as an administrator
 
 
 
