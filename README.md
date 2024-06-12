@@ -1,9 +1,9 @@
 # Smurftown App
 
-Manage all of your battlenet account in one place.
+Manage all of your battlenet accounts in one place.
 
 > [!WARNING]
-> This app needs admin priviliges to function properly. If you want the app to launch your Battlenet with other windows users, please make sure to run this app as an administrator
+> This app needs admin priviliges to function properly. If you want the app to launch multiple Battlenet instances in parallel, please make sure to run this app as an administrator
 
 ![image](https://github.com/ZrdJ/smurftown/assets/7228633/e6cd78b6-78e2-444f-8b39-ae002c614467)
 
@@ -12,11 +12,10 @@ Manage all of your battlenet account in one place.
 * Manage battlenet login credentials
 * Easily access and copy login credentials if needed
 * Filter your accounts by name or games
-* Manage dedicated windows users to launch multiple instances of battlenet at the same time
+* Manage dedicated windows users to launch multiple instances of battlenet in parallel
 
 ## Running as administrator
-To be able to windows account features to its full extend, simply configure the app to run as administrator:
-![image](https://github.com/ZrdJ/smurftown/assets/7228633/fcb668a9-f90a-4bda-9ebd-e1e940555657)
+For this app to be able to manage windows users, make sure to run it as administrator.
 
 # Installation
 ## Download the certificate and the installer
