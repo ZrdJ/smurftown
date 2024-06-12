@@ -53,7 +53,7 @@ Thats because this app is creating windows users on your behalf when you decide 
 No, this app operates only locally and does not communicate with anything online
 
 ### So where is my data stored when it does not communicate with a server?
-Your data is stored in a single file called `data.yaml` and can be found in your installation directory (next to `Smurftown.exe`)
+Your data is stored in local files only. You can find all files within the `.smurftown` folder in your home directory (`C:\Users\YOUR_USER\.smurftown`).
 
 ### How can I be sure you are not lying?
 You can't. Lookup the source code yourself and decide on your own.
