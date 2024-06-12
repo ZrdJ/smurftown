@@ -9,7 +9,7 @@
     <Identity
             Name="c959ed6c-7b93-422d-91b7-6e03efc6d01c"
             Publisher="CN=Aleksandar Damjanovic"
-            Version="2024.6.1.0"/>
+            Version="2024.6.2.0"/>
 
     <Properties>
         <DisplayName>SmurftownInstaller</DisplayName>
