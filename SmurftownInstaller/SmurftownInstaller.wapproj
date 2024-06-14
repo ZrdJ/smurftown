@@ -60,7 +60,7 @@
     <PackageCertificateThumbprint>8FF4E82B9F074D56DF7C3B093DE5C064EA581781</PackageCertificateThumbprint>
     <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <AppInstallerUri>D:\Development\Projects\personal\smurftown-wpf\SmurftownInstaller\bin\installer</AppInstallerUri>

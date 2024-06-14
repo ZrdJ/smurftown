@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="PsExec.exe"/>
     <None Remove="UI\Images\add.png" />
     <None Remove="UI\Images\battlenet.png" />
     <None Remove="UI\Images\copy.png" />
@@ -36,6 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="PsExec.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="UI\Images\add.png" />
     <Resource Include="UI\Images\battlenet.png" />
     <Resource Include="UI\Images\copy.png" />
