@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics;
 using System.DirectoryServices.AccountManagement;
+using System.IO;
 using System.Management;
 using Smurftown.Backend.Entity;
 
@@ -9,6 +10,7 @@ namespace Smurftown.Backend.Gateway
     public class WindowsAccountGateway
     {
         public static readonly WindowsAccountGateway Instance = new();
+        private readonly string _psExecExecutable = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PsExec.exe");
 
         private SortedSet<WindowsUserAccount> _windowsAccounts;
 
@@ -77,7 +79,7 @@ namespace Smurftown.Backend.Gateway
             var windowsUser = ToWindowsAccount(account);
             const string programPath = @"C:\Program Files (x86)\Battle.net\Battle.net.exe";
             var command = account.DedicatedWindowsUser
-                ? $"psexec -accepteula -u {windowsUser.Name} -p {windowsUser.Name} \"{programPath}\""
+                ? $"{_psExecExecutable} -accepteula -u {windowsUser.Name} -p {windowsUser.Name} \"{programPath}\""
                 : $"\"{programPath}\"";
             Console.WriteLine(command);
             var startInfo = new ProcessStartInfo
@@ -97,15 +99,6 @@ namespace Smurftown.Backend.Gateway
                 Console.WriteLine("Starting process");
                 process.Start();
 
-                // Optional: Read the output and error
-                //var output = process.StandardOutput.ReadToEnd();
-                //var error = process.StandardError.ReadToEnd();
-
-                // Optional: Display the output and error
-                //Console.WriteLine("Output:");
-                //Console.WriteLine(output);
-                //Console.WriteLine("Error:");
-                //Console.WriteLine(error);
                 Console.WriteLine("Waiting for 500 ms");
                 await Task.Delay(500);
 
