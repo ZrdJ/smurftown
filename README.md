@@ -27,6 +27,20 @@ Go to [Releases](https://github.com/ZrdJ/smurftown/releases) and download the la
 Doubleclick the downloaded certificate file `SmurftownInstaller_*_x64.cer` and hit `install`:
 ![image](https://github.com/ZrdJ/smurftown/assets/7228633/98a5fe90-6b1c-4d14-bcf5-5a5814ae5ec8)
 
+Next, choose local computer:
+
+![image](https://github.com/ZrdJ/smurftown/assets/7228633/2bbda597-faf9-4f39-be0e-ebd9f14d3b7f)
+
+Next, choose a certificate store:
+
+![image](https://github.com/ZrdJ/smurftown/assets/7228633/8e77b0a3-cff6-4245-a009-80bd3400ab2f)
+
+Next, select "Trusted Root Certification Authorities"
+
+![image](https://github.com/ZrdJ/smurftown/assets/7228633/5fe63957-5b38-45e4-9059-95da5cde7338)
+
+
+
 ## Run the installer
 Run the installer file `SmurftownInstaller_*_x64.msixbundle`
 
