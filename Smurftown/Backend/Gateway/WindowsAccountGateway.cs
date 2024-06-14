@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Management;
+using Serilog;
 using Smurftown.Backend.Entity;
 
 namespace Smurftown.Backend.Gateway
@@ -81,7 +82,8 @@ namespace Smurftown.Backend.Gateway
             var command = account.DedicatedWindowsUser
                 ? $"{_psExecExecutable} -accepteula -u {windowsUser.Name} -p {windowsUser.Name} \"{programPath}\""
                 : $"\"{programPath}\"";
-            Console.WriteLine(command);
+            Log.Information($"{account.Battletag()}: starting battlenet");
+            Log.Information($"{account.Battletag()}: executing '{command}'");
             var startInfo = new ProcessStartInfo
             {
                 FileName = "cmd.exe",
@@ -96,19 +98,14 @@ namespace Smurftown.Backend.Gateway
             using (var process = new Process())
             {
                 process.StartInfo = startInfo;
-                Console.WriteLine("Starting process");
                 process.Start();
 
-                Console.WriteLine("Waiting for 500 ms");
                 await Task.Delay(500);
 
                 // Kill the process if it's still running
-                Console.WriteLine("Checking if process is finished: " + process.HasExited);
                 if (!process.HasExited)
                 {
-                    Console.WriteLine("Killing process..");
                     process.Kill();
-                    Console.WriteLine("Killing process.. DONE!");
                 }
             }
         }

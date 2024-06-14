@@ -11,9 +11,6 @@ namespace Smurftown.Backend.Gateway
     public class BattlenetAccountGateway
     {
         public static readonly BattlenetAccountGateway Instance = new();
-
-        private readonly string _configDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        private readonly string _configFileDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".smurftown");
         private readonly string _configFile;
 
         private readonly IDeserializer _yamlIn = new DeserializerBuilder()
@@ -26,7 +23,7 @@ namespace Smurftown.Backend.Gateway
 
         private BattlenetAccountGateway()
         {
-            _configFile = Path.Combine(_configFileDirectory, "data.yaml");
+            _configFile = Path.Combine(Directories.UserPath, "data.yaml");
             foreach (var account in ReadFromConfigFile())
             {
                 BattlenetAccounts.Add(account);
@@ -115,8 +112,10 @@ namespace Smurftown.Backend.Gateway
         {
             if (!File.Exists(_configFile))
             {
-                Directory.CreateDirectory(_configFileDirectory);
-                using (File.Create(_configFile)) { }
+                Directory.CreateDirectory(Directories.UserPath);
+                using (File.Create(_configFile))
+                {
+                }
             }
         }
 
