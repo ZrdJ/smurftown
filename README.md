@@ -20,8 +20,8 @@ For this app to be able to manage windows users, make sure to run it as administ
 # Installation
 ## Download the certificate and the installer
 Go to [Releases](https://github.com/ZrdJ/smurftown/releases) and download the latest bundle containing:
-* SmurftownInstaller_2024.6.1.0_x64.cer
-* SmurftownInstaller_2024.6.1.0_x64.msixbundle
+* SmurftownInstaller_X.X.X.X_x64.cer
+* SmurftownInstaller_X.X.X.X_x64.msixbundle
 
 ## Install certificate on your PC
 Doubleclick the downloaded certificate file `SmurftownInstaller_*_x64.cer` and hit `install`:
