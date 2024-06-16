@@ -20,8 +20,8 @@ For this app to be able to manage windows users, make sure to run it as administ
 # Installation
 ## Download the certificate and the installer
 Go to [Releases](https://github.com/ZrdJ/smurftown/releases) and download the latest bundle containing:
-* SmurftownInstaller_X.X.X.X_x64.cer
-* SmurftownInstaller_X.X.X.X_x64.msixbundle
+* Smurftown.cer
+* Setup.msi
 
 ## Install certificate on your PC
 Doubleclick the downloaded certificate file `SmurftownInstaller_*_x64.cer` and hit `install`:
@@ -42,7 +42,7 @@ Next, select "Trusted Root Certification Authorities"
 
 
 ## Run the installer
-Run the installer file `SmurftownInstaller_*_x64.msixbundle`
+Run the installer file `Setup.msi`
 
 # Roadmap
 ## Heroes of the Storm
