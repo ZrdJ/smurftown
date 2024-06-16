@@ -8,10 +8,11 @@
     <UseWPF>true</UseWPF>
       <ApplicationIcon>UI\Images\smurftown.ico</ApplicationIcon>
       <Platforms>AnyCPU;x64</Platforms>
+      <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="PsExec.exe"/>
+      <None Remove="PsExec.exe"/>
     <None Remove="UI\Images\add.png" />
     <None Remove="UI\Images\battlenet.png" />
     <None Remove="UI\Images\copy.png" />

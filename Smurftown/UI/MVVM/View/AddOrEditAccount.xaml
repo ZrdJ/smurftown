@@ -11,7 +11,8 @@
         WindowStartupLocation="CenterOwner"
         BorderBrush="#313339"
         BorderThickness="1"
-        Title="AddOrEditAccount" Height="450" Width="750"
+        Title="AddOrEditAccount" Height="650" Width="950"
+        DataContextChanged="Window_DataContextChanged"
         d:DataContext="{d:DesignInstance {x:Type local:AddOrEditAccountViewModel}}">
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -88,8 +89,11 @@
                            RenderOptions.BitmapScalingMode="HighQuality" Height="40" Width="40" />
                 </ToggleButton>
             </StackPanel>
+            <RichTextBox x:Name="NotesTextBox" TextChanged="RichTextBox_TextChanged"
+                         Style="{StaticResource BattlenetRichTextBoxTheme}" Height="200" Margin="20">
+            </RichTextBox>
         </StackPanel>
-        <Separator Background="#313339" Margin="0,60,0,0" />
+        <Separator Background="#313339" Margin="0,20,0,0" />
 
         <Border Margin="0,0,0,0" Height="80" Background="#15171E">
             <StackPanel Orientation="Horizontal" Margin="20,10,20,20">
@@ -100,7 +104,7 @@
                         Width="120" Content="Cancel" Height="30"
                         Margin="10,0,0,0" IsCancel="True">
                 </Button>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="300,0,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="500,0,0,0">
                     <CheckBox IsChecked="{Binding DedicatedWindowsUserChecked}" Margin="0,15,0,0">
                         <TextBlock Text="dedicated windows user" Foreground="#8F8F92" FontSize="12"
                                    FontWeight="DemiBold" Margin="0,0,0,0">

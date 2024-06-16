@@ -24,7 +24,7 @@
         public required bool Hots { get; set; }
         public required bool Wow { get; set; }
         public required bool Diablo { get; set; }
-
+        public required string Notes { get; set; }
         public required bool DedicatedWindowsUser { get; set; }
         public required DateTime LatestInteractionAt { get; set; }
 

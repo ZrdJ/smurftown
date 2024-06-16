@@ -13,12 +13,12 @@ namespace Smurftown
         {
             if (!Directory.Exists(Directories.UserPath)) Directory.CreateDirectory(Directories.UserPath);
 
-            using var log = new LoggerConfiguration()
+            Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
                 .WriteTo.File(Path.Combine(Directories.UserPath, "smurftown.log"))
                 .CreateLogger();
 
-            log.Information("starting smurftown");
+            Log.Information("starting smurftown");
             base.OnStartup(e);
         }
     }

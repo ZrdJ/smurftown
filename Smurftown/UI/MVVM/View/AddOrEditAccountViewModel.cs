@@ -20,6 +20,7 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
     private string? _email;
     private bool _hotsChecked;
     private string? _name;
+    private string _notes;
     private bool _overwatchChecked;
     private bool _saveButtonEnabled;
     private bool _wowChecked;
@@ -35,6 +36,7 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
         Discrimnator = account != null ? long.Parse(account.Discriminator) : null;
         Email = account?.Email ?? "";
         Password = account?.Password ?? "";
+        Notes = account?.Notes ?? "";
         OkCommand = new RelayCommand(Ok);
         CancelCommand = new RelayCommand(Cancel);
         RefreshDialog();
@@ -47,6 +49,17 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
         {
             if (value == _saveButtonEnabled) return;
             _saveButtonEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string Notes
+    {
+        get => _notes;
+        set
+        {
+            if (value == _notes) return;
+            _notes = value;
             OnPropertyChanged();
         }
     }
@@ -197,7 +210,8 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
             Hots = HotsChecked,
             Wow = WowChecked,
             Diablo = DiabloChecked,
-            LatestInteractionAt = DateTime.Now
+            LatestInteractionAt = DateTime.Now,
+            Notes = Notes ?? ""
         };
 
         _battlenetAccountGateway.AddOrUpdate(account);

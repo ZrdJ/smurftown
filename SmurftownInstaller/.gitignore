@@ -1,5 +1,0 @@
-*.pfx
-AppPackages/
-bin/
-BundleArtifacts
-obj/

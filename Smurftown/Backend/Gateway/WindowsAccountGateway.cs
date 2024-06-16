@@ -11,7 +11,7 @@ namespace Smurftown.Backend.Gateway
     public class WindowsAccountGateway
     {
         public static readonly WindowsAccountGateway Instance = new();
-        private readonly string _psExecExecutable = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PsExec.exe");
+        private readonly string _psExecExecutable = Path.Combine(Directories.UserPath, "PsExec.exe");
 
         private SortedSet<WindowsUserAccount> _windowsAccounts;
 
@@ -80,10 +80,11 @@ namespace Smurftown.Backend.Gateway
             var windowsUser = ToWindowsAccount(account);
             const string programPath = @"C:\Program Files (x86)\Battle.net\Battle.net.exe";
             var command = account.DedicatedWindowsUser
-                ? $"{_psExecExecutable} -accepteula -u {windowsUser.Name} -p {windowsUser.Name} \"{programPath}\""
+                ? $"psexec -accepteula -u {windowsUser.Name} -p {windowsUser.Name} \"{programPath}\""
                 : $"\"{programPath}\"";
+
             Log.Information($"{account.Battletag()}: starting battlenet");
-            Log.Information($"{account.Battletag()}: executing '{command}'");
+            Log.Information($"{account.Battletag()}: '{command}'...");
             var startInfo = new ProcessStartInfo
             {
                 FileName = "cmd.exe",
@@ -99,12 +100,12 @@ namespace Smurftown.Backend.Gateway
             {
                 process.StartInfo = startInfo;
                 process.Start();
-
-                await Task.Delay(500);
+                await Task.Delay(1000 * 1);
 
                 // Kill the process if it's still running
                 if (!process.HasExited)
                 {
+                    Log.Information($"{account.Battletag()}: killing CMD process after a delay of 1s");
                     process.Kill();
                 }
             }
