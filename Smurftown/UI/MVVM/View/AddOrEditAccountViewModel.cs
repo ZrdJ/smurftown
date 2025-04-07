@@ -39,6 +39,7 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
         Notes = account?.Notes ?? "";
         OkCommand = new RelayCommand(Ok);
         CancelCommand = new RelayCommand(Cancel);
+        RecreateUserCommand = new RelayCommand(RecreateUser);
         RefreshDialog();
     }
 
@@ -101,6 +102,8 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
 
     public ICommand OkCommand { get; }
     public ICommand CancelCommand { get; }
+
+    public ICommand RecreateUserCommand { get; }
 
     public bool OverwatchChecked
     {
@@ -170,6 +173,25 @@ public class AddOrEditAccountViewModel : ObservableObject, IModalDialogViewModel
     private void Cancel()
     {
         DialogResult = false;
+    }
+
+    private void RecreateUser()
+    {
+        var account = new BattlenetAccount
+        {
+            Name = Name!,
+            Discriminator = Discrimnator!.ToString(),
+            Email = Email!,
+            Password = Password!,
+            Overwatch = OverwatchChecked,
+            DedicatedWindowsUser = DedicatedWindowsUserChecked,
+            Hots = HotsChecked,
+            Wow = WowChecked,
+            Diablo = DiabloChecked,
+            LatestInteractionAt = DateTime.Now,
+            Notes = Notes ?? ""
+        };
+        _windowsAccountGateway.Recreate(account);
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs propertyChangedEventArgs)

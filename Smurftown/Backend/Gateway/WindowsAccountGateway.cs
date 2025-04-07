@@ -32,6 +32,14 @@ namespace Smurftown.Backend.Gateway
             Reload();
         }
 
+        public void Recreate(BattlenetAccount account)
+        {
+            var windowsAccount = ToWindowsAccount(account);
+            DeleteWindowsAccount(windowsAccount);
+            CreateWindowsAccount(windowsAccount);
+            Reload();
+        }
+
         private WindowsUserAccount ToWindowsAccount(BattlenetAccount account)
         {
             return new WindowsUserAccount
@@ -52,17 +60,22 @@ namespace Smurftown.Backend.Gateway
                 }).ToList();
         }
 
+        private static void DeleteWindowsAccount(WindowsUserAccount account)
+        {
+            using var ctx = new PrincipalContext(ContextType.Machine);
+            var user = UserPrincipal.FindByIdentity(ctx, IdentityType.SamAccountName, account.Name);
+            user?.Delete();
+        }
+
         private static void CreateWindowsAccount(WindowsUserAccount account)
         {
-            using (var ctx = new PrincipalContext(ContextType.Machine))
-            {
-                var user = new UserPrincipal(ctx);
-                user.SamAccountName = account.Name;
-                user.SetPassword(account.Name);
-                user.DisplayName = account.Name;
-                user.Description = "Created by Smurftown";
-                user.Save();
-            }
+            using var ctx = new PrincipalContext(ContextType.Machine);
+            var user = new UserPrincipal(ctx);
+            user.SamAccountName = account.Name;
+            user.SetPassword(account.Name);
+            user.DisplayName = account.Name;
+            user.Description = "Created by Smurftown";
+            user.Save();
         }
 
         public void Reload()
